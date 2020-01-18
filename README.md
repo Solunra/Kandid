@@ -9,3 +9,4 @@
  
  #### Team Members
   * Sunny Deng (Solunra)
+  * Juan Sebastian Hoyos (Futsunuchi)
