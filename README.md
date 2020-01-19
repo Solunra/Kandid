@@ -12,7 +12,7 @@
  
  #### Team Members
   * Sunny Deng (Solunra)
-  * Juan Sebastian Hoyos (Futsunuchi)
+  * Juan Sebastian Hoyos (jshoyos)
   * Tigran Karapetyan (Tigrankar)
   * Ashwin Philip (Ashphil30)
   * Noah Freger (noahfreger)
