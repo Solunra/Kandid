@@ -5,7 +5,10 @@
  `Objective of the project Here`
  
 #### Core Features
- `Core features here`
+ * Ability to post images, also named as a "post"
+ * Allow users to comment on posts
+ * Allow users to follow another user
+ * Users will receive a notification when a followed user posts
  
  #### Team Members
   * Sunny Deng (Solunra)
