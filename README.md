@@ -2,7 +2,7 @@
  Kandid is a mobile Application that allows you to share all your favorite moments through pictures as well as to follow your biggest inspirations in life.
   
 #### Objective
- Create a network of people
+ Create a network of people <br>
  Create an apllication similar to Instagarm that allows users to post pictures, like posts and more...
 
  
