@@ -3,6 +3,8 @@
   
 #### Objective
  Create a network of people
+ Create an apllication similar to Instagarm that allows users to post pictures, like posts and more...
+
  
 #### Core Features
  * Ability to post images, also named as a "post"
