@@ -4,7 +4,7 @@
  and receive notifications when they add a new picture to their gallery.
   
 #### Objective
- Create a social media application for to people to connect through pictures
+ Create a social media application for people to connect through pictures
  
  
 #### Core Features
