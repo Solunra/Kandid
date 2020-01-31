@@ -5,7 +5,8 @@
   
 #### Objective
  Create a social media application for people to connect through pictures
- 
+ Create a network of people <br>
+ Create an apllication similar to Instagarm that allows users to post pictures, like posts and more...
  
 #### Core Features
  * Ability to post images, also named as a "post"
