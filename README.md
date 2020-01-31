@@ -1,6 +1,6 @@
 ﻿# Kandid
  Kandid is a mobile Application that allows you to share all your favorite moments through pictures as well as to follow your biggest inspirations in life. Once a user registers and signs in, they can post
- </br> pictures on their personal gallery with a description. They can then visit other users' galleries to view their pictures if they wish, they can follow specific users to always see their latest pictures.</br>
+ pictures on their personal gallery with a description. They can then visit other users' galleries to view their pictures if they wish, they can follow specific users to always see their latest pictures
  and receive notifications when they add a new picture to their gallery.
   
 #### Objective
