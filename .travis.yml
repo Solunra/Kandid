@@ -1,4 +1,6 @@
 ﻿language: csharp
+dotnet: 3.1.101
+mono: latest
 before_install:
   - chmod +x build.sh
 script: ./build.sh
