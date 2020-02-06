@@ -25,4 +25,4 @@ CREATE TABLE comments (
 CREATE TABLE followers (
     UserID int REFERENCES  users(UserID),
     FollowerID int REFERENCES users(UserID)
-)
+);
