@@ -14,6 +14,16 @@ namespace Kandid.Core.db
                 var con = new NpgsqlConnection(connection);
                 con.Open();
 
+                var createDatabase = new NpgsqlCommand("CREATE DATABASE kandid");
+                try
+                {
+                    createDatabase.ExecuteReader();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
                 var evolve = new Evolve.Evolve(con, Console.WriteLine)
                 {
                     Locations = new[] { "db/migrations" },
