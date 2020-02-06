@@ -1,4 +1,4 @@
-﻿using Kandid.Core.Startup;
+﻿using Kandid.Core.db;
 
 namespace Kandid.Core
 {
@@ -6,7 +6,7 @@ namespace Kandid.Core
     {
         public static void Main(string[] args)
         {
-            Database.StartDatabase();
+            KandidDatabase.StartDatabase();
         }
     }
 }
