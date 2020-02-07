@@ -1,7 +1,9 @@
 var assert = require('chai').assert;
 
-it("dummyTests", () => {
+it("checkTrue", () => {
     assert.isTrue(true, "True is true");
+});
+
+it("checkEquals", () => {
     assert.equal(true, true, "True is equal to true");
-    //assert.equal(true, false);
 });
