@@ -1,6 +1,4 @@
-﻿language: csharp
-dotnet: 3.1.101
-mono: latest
-before_install:
-  - chmod +x build.sh
-script: ./build.sh
+﻿language: node_js
+script:
+  - npm install
+  - npm test
