@@ -16,12 +16,20 @@
  
  #### Technology Used
  These technologies are prone to change throughout the development of the program, but are here as base.
-  * The code behind will be written in C# while the Views will be coded in Xamarin.
-  * Kandid will only be an Android application (there is a possibility of making an iOS version)
-  * We will use the MvvmCross Framework to implement a Model View ViewModel Pattern, binding the data to our views
-  * MvvmCross also allows us to use inversion of control (IoC) to have loose coupling
-  * Facebook login - This will be use as a possible method to login into the users account
- 
+  * The code behind will be written in Node.JS and in React.
+  * Express will be used as the web framework for the project
+  
+ #### Start the service
+ In order to start the application, run the following command. <br/>
+ ``
+    npm run
+ ``<br/>
+ In order to stop the application, do CTRL + C or CMD + C <br/><br/>
+ In order to test the application, run the following command. <br/>
+  ``
+    npm test
+  ``
+  
  #### Team Members
   * Sunny Deng (Solunra)
   * Juan Sebastian Hoyos (jshoyos)
