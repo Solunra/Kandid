@@ -6,14 +6,17 @@
     "url": "https://github.com/Solunra/Kandid"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node server/index.js",
     "test": "mocha ./test --recursive"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mocha": "^7.0.1"
+    "mocha": "^7.0.1",
+    "mongoose": "^5.8.11"
   },
   "devDependencies": {
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "mongoose-auto-increment-reworked": "^1.2.1",
+    "mongoose-immutable": "0.0.2"
   }
 }
