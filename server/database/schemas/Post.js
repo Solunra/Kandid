@@ -9,7 +9,8 @@ const postSchema = new Schema({
     UserID: { type: String },
     ImageLink: { type: String },
     Caption: { type: String },
-    Like: { type: Number }
+    Like: { type: Number },
+    PostDate: {type: Date, default: Date.now}
 });
 
 postSchema.plugin(MongooseAutoIncrementID.plugin, {

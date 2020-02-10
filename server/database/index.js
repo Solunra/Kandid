@@ -7,7 +7,7 @@ const options = {
     useUnifiedTopology: true,
 };
 
-const database = mongoose.connect(process.env.DATABASE_URL, options)
+const database = mongoose.connect('mongodb://127.0.0.1:27017/Kandid', options)
     .then(() => console.log('Connected to database.'))
     .catch(err => console.error('Error connecting to database:', err.message));
 
