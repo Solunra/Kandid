@@ -4,6 +4,15 @@ import {Link, Route} from "react-router-dom";
 
 
 export default class SignUp extends Component{
+    constructor(props) {
+        super(props);
+        this.state={
+            firstName:"",
+            lastName:"",
+            email:"",
+            password:""
+        };
+    }
     render() {
         return(
             <form>
