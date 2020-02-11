@@ -6,7 +6,7 @@ require('./database');
 
 const routes = require('./routes/index');
 
-app.get('/', (req, res) => res.send("Web Page Test"));
+app.get('/', (req, res) => res.send({express:'Web Page Test'}));
 
 app.use('/', routes);
 

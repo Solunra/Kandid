@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+#login{
+  width: 30%;
+  height: 50%;
+  position: absolute;
+  top: 20%;
+  left: 35%;
+}
