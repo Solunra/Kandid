@@ -14,7 +14,7 @@ export default class Reply extends react.Component {
         }
     };
     handleChange = (e) => {
-        this.setState({[event.target.name]:event.target.value});
+        this.setState({[e.target.name]:e.target.value});
     };
     render(){
         return({PostID}) => (
