@@ -1,6 +1,6 @@
 const express = require("express");
 const { Comment } = require('../database/schemas');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const router = express.Router();
 
