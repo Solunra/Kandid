@@ -33,9 +33,6 @@ router.get("/test", (req, res) => {
 router.put("/", (req, res) => {
     var post = new postModel;
     post.UserID = req.user.UserID;
-    post.ImageLink = req.body.post.ImageLink;
-    post.Caption = req.body.post.Caption;
-    post.Like = 0;
 
     post.Caption = req.body.post.Caption;
     post.Like = 0;
