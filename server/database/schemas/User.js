@@ -6,6 +6,8 @@ const immutablePlugin = require('mongoose-immutable');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+    firstname: { type: String },
+    lastname: { type: String },
     username: { type: String },
     password: {type: String},
     added_on: {type: Date}
