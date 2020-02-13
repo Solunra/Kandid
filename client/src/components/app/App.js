@@ -7,6 +7,7 @@ import {Login, SignUp} from '../LoginSignUp';
 import {NotFound} from '../NotFound';
 import {Profile} from '../Profile';
 
+
 function App() {
   return (
       <Router>
