@@ -6,6 +6,6 @@ const comment = require('./comment');
 const router = express.Router();
 
 router.use('/api/post', post);
-router.use('/api/login', comment);
+router.use('/api/comment', comment);
 
 module.exports = router;

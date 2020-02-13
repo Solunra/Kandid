@@ -6,7 +6,7 @@ const router = express.Router();
 
 module.exports = router;
 
-const postModel = mongoose.model("Comment");
+const commentModel = mongoose.model("Comment");
 
 router.get("/", (req, res) => {
     Comment.find().sort('-PostDate').exec((err, post) => {
@@ -16,6 +16,15 @@ router.get("/", (req, res) => {
             res.status(200).send({posts: post});
         }
     });
+});
+
+router.get("/test", (req, res) => {
+    const comment0 = new commentModel;
+    comment0.UserID = "testID";
+    comment0.PostID = "0000000001";
+    comment0.Comment = "The following is a test comment: I like doughnuts";
+    comment0.save();
+    res.send("[Database has received a comment]");
 });
 
 router.put("/", (req, res) => {
