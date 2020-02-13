@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+#PostPicture{
+  height: 200px;
+  width: 200px;
+  background: url("./images/camera.png");
+  position: relative;
+  left: 80%;
+}
