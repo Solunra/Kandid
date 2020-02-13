@@ -9,6 +9,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import './index.css'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import IconButton from "@material-ui/core/IconButton";
+import Comment from "../Comment"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -35,7 +36,7 @@ let projects = [{
 export default function SimpleContainer(){
     const handlePost = event =>{
         console.log('Post Picture');
-    }
+    };
     const classes = useStyles();
         return (
             <React.Fragment>
@@ -46,6 +47,7 @@ export default function SimpleContainer(){
                             {projects.map(tile => (
                                 <GridListTile key={tile.id} cols={1}>
                                     <img src={tile.photo} width="500px" height="500px"/>
+                                    <Comment PostID = tile.id/>
                                 </GridListTile>
                             ))}
                         </GridList>

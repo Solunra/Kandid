@@ -9,7 +9,7 @@ export default class Reply extends react.Component {
         if (this.state.comment !== "") {
             fetch("localhost:8000/api/comment", {
                 method: 'PUT',
-                body: JSON.stringify({comment: this.state.comment})
+                body: JSON.stringify({PostID: this.props.PostID, comment: this.state.comment})
             }).then(r => console.debug(r))
         }
     };
@@ -17,7 +17,7 @@ export default class Reply extends react.Component {
         this.setState({[event.target.name]:event.target.value});
     };
     render(){
-        return(
+        return({PostID}) => (
             <div className = "reply">
                 <form onSubmit = {this.handleSubmit}>
                     <input id = "toadd" placeholder="Enter your comment here" onChange={this.handleChange}/>

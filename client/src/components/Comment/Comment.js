@@ -22,7 +22,7 @@ export default class Comment extends react.Component {
     render()
     {
         this.getComments();
-        return (
+        return ({PostID}) => (
             <div className = "comments">
                 <table>
                 {this.state.postComments.map(comment => {
@@ -30,7 +30,7 @@ export default class Comment extends react.Component {
                         <tr><td>{this.state.userID}</td><td>{comment}</td></tr>
                 )
                 })}
-                <tr><td>MyUserIdPlaceholder</td><td><Reply/></td></tr>
+                <tr><td>MyUserIdPlaceholder</td><td><Reply PostID = {this.props.PostId} /></td></tr>
                 </table>
             </div>
         )
