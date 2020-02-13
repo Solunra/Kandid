@@ -1,8 +1,8 @@
-export {default as App} from './app'
+export {default as App} from './App'
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import "./index.css";
+import "../LoginSignUp/index.css";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
