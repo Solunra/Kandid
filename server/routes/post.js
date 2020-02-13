@@ -44,5 +44,5 @@ router.put("/", (req, res) => {
        }
     });
     post.save();
-    res.status(200).send("Post succesfully posted");
+    res.status(200).send("Post successfully posted");
 });
