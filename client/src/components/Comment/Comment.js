@@ -6,7 +6,7 @@ export default class Comment extends react.Component {
       postComments: [],
       commentsPresent: false
     };
-    getComments() {
+    getComments = () => {
         fetch("localhost:8000/api/comments")
             .then(res => res.json())
             .then((res) => {
