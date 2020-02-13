@@ -8,7 +8,7 @@ module.exports = router;
 
 const postModel = mongoose.model("Post");
 
-const uploadPath = __dirname + "./images/";
+const uploadPath = __dirname + "../images/";
 
 router.get("/", (req, res) => {
     Post.find().sort('-PostDate').exec((err, post) => {
