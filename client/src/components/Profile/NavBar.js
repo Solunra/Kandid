@@ -9,8 +9,6 @@ import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from "@material-ui/core/Avatar";
@@ -28,15 +26,15 @@ const useStyles = makeStyles(theme => ({
     search: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
+        backgroundColor: fade(theme.palette.common.black, 0.15),
         '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
+            backgroundColor: fade(theme.palette.common.black, 0.25),
         },
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(1),
         marginLeft: 0,
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
+            marginLeft: theme.spacing(30),
             width: 'auto',
         },
     },
@@ -53,7 +51,7 @@ const useStyles = makeStyles(theme => ({
         color: 'inherit',
     },
     inputInput: {
-        padding: theme.spacing(1, 1, 1, 7),
+        padding: theme.spacing(1, 5, 1, 15),
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
@@ -110,6 +108,7 @@ export default function PrimarySearchAppBar() {
         >
             <MenuItem>
                 <IconButton aria-label="show 2 new notifications" color="inherit">
+                    {/*TODO:Use the real number of notification*/}
                     <Badge badgeContent={2} color="secondary">
                         <NotificationsIcon />
                     </Badge>
@@ -123,6 +122,7 @@ export default function PrimarySearchAppBar() {
                     aria-haspopup="true"
                     color="inherit"
                 >
+                    {/*TODO: Use Picture for avatar */}
                     <Avatar className={classes.orange}>N</Avatar>
                 </IconButton>
                 <p>Profile</p>
@@ -132,7 +132,7 @@ export default function PrimarySearchAppBar() {
 
     return (
         <div className={classes.grow}>
-            <AppBar position="static">
+            <AppBar position="static" color="white">
                 <Toolbar>
                     <IconButton
                         edge="start"
@@ -141,7 +141,7 @@ export default function PrimarySearchAppBar() {
                         aria-label="open drawer"
                     >
                     </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>
+                    <Typography className={classes.title} variant="h4" noWrap>
                         Kandid
                     </Typography>
                     <div className={classes.search}>
@@ -159,8 +159,9 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 5 new notifications" color="inherit">
-                            <Badge badgeContent={5} color="secondary">
+                        {/*TODO:Use the real number of notification*/}
+                        <IconButton aria-label="show 2 new notifications" color="inherit">
+                            <Badge badgeContent={2} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
