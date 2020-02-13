@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 8000;
 
 require('./database');
 
@@ -14,6 +14,5 @@ app.use('/', routes);
 
 // Allows static images to be placed in the /images folder
 app.use('/images', express.static(__dirname + '/images'));
-
 
 app.listen(port, () => console.log(`Web page started on port ${port}`));

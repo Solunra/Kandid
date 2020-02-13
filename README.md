@@ -23,13 +23,14 @@
  In order to start the application, run the following command. <br/>
  ``
     npm run
- ``<br/>
+ ``
  In order to stop the application, do CTRL + C or CMD + C <br/><br/>
  In order to test the application, run the following command. <br/>
   ``
     npm test
-  ``
-  
+  ``<br/><br/>
+  The back-end's port is on 8000 <br/>
+  The front-end's port is on 3000
  #### Team Members
   * Sunny Deng (Solunra)
   * Juan Sebastian Hoyos (jshoyos)
