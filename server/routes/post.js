@@ -8,6 +8,8 @@ module.exports = router;
 
 const postModel = mongoose.model("Post");
 
+const uploadPath = __dirname + "./images/";
+
 router.get("/", (req, res) => {
     Post.find().sort('-PostDate').exec((err, post) => {
         if (err) {
@@ -35,5 +37,15 @@ router.put("/", (req, res) => {
     post.Caption = req.body.post.Caption;
     post.Like = 0;
 
+    post.Caption = req.body.post.Caption;
+    post.Like = 0;
+    var imageFile = req.files.image;
+    post.ImageLink = uploadPath + imageFile.name;
+    imageFile.mv(post.ImageLink, (err) => {
+       if (err) {
+           res.status(500).send(err);
+       }
+    });
+    post.save();
     res.status(200).send("Post succesfully posted");
 });

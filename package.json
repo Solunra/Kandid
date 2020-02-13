@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "express-fileupload": "^1.1.6",
     "mocha": "^7.0.1",
     "mongoose": "^5.8.11",
     "ramda": "^0.27.0"
