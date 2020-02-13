@@ -18,7 +18,7 @@ export default class Comment extends react.Component {
                     })
                 }
             });
-    }
+    };
     render()
     {
         this.getComments();
