@@ -5,22 +5,31 @@ export default  class Login extends Component{
         super(props);
         this.state={
             email:"",
-            password:""
+            password:"",
+            rememberMe:false
         };
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+    handleChange(event){
+        this.setState({[event.target.name]:event.target.value});
+    }
+    handleSubmit(event){
+        let json=JSON.stringify(this.state);
     }
     render() {
         return(
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <h3>Sign In</h3>
 
                 <div className="form-group">
                     <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <input type="email" className="form-control" placeholder="Enter email" name="email" />
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <input type="password" className="form-control" placeholder="Enter password" name="password" />
                 </div>
 
                 <div className="form-group">

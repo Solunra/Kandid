@@ -10,35 +10,55 @@ export default class SignUp extends Component{
             firstName:"",
             lastName:"",
             email:"",
-            password:""
+            password:"",
+            confirmPassword:""
         };
+        this.handleChange =this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+    handleSubmit(event){
+        event.preventDefault();
+        let json=JSON.stringify(this.state);
+        fetch("http://localhost:8000",{
+            method:"POST",
+            body:[json]
+        });
+    }
+    handleChange(event){
+        this.setState({[event.target.name]:event.target.value});
+    }
+
     render() {
         return(
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <h3>Sign Up</h3>
 
                 <div className="form-group">
                     <label>First name</label>
-                    <input type="text" className="form-control" placeholder="First name" />
+                    <input type="text" className="form-control" name="firstName" placeholder="First name" onChange={this.handleChange} />
                 </div>
 
                 <div className="form-group">
                     <label>Last name</label>
-                    <input type="text" className="form-control" placeholder="Last name" />
+                    <input type="text" className="form-control" name="lastName" placeholder="Last name" onChange={this.handleChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
+                    <input type="email" className="form-control" name="email" placeholder="Enter email" onChange={this.handleChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+                    <input type="password" className="form-control" name="password" placeholder="Enter password" onChange={this.handleChange}/>
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                <div className="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" className="form-control" name="confirmPassword" placeholder="Enter password" onChange={this.handleChange}/>
+                </div>
+
+                <button type="submit" className="btn btn-primary btn-block" >Sign Up</button>
                 <p className="forgot-password text-right">
                     Already registered <Link to={"/login"}>Login</Link>
                 </p>
@@ -46,4 +66,5 @@ export default class SignUp extends Component{
             </form>
         )
     }
+
 }
