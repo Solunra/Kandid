@@ -12,7 +12,7 @@ module.exports = router;
 
 const userModel = mongoose.model("User");
 
-router.put("/", (req, res) => {git
+router.put("/", (req, res) => {
     var user = new userModel;
     var check1=true, check2 = true;
     console.log(req.body);

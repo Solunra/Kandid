@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import {Link, Route, Switch} from "react-router-dom";
 import './index.css';
+import request from 'superagent';
 
 export default class SignUp extends Component{
     constructor(props) {
@@ -19,12 +20,14 @@ export default class SignUp extends Component{
         event.preventDefault();
         let json=JSON.stringify(this.state);
         console.log(json);
-        const response=fetch("http://localhost:8000/api/register",{
-            method:"PUT",
-            body:{profile:this.json}
-        }).then(response=>console.log(response));
-        console.log(response.body);
-    }
+        // const response=fetch("http://localhost:8000/api/register",{
+        //     method:"PUT",
+        //     body:{profile:this.json}
+        // }).then(response=>console.log(response));
+        request
+            .put("http://localhost:8000/api/register")
+            .send({profile: json}).then();
+    };
     handleChange(event){
         this.setState({[event.target.name]:event.target.value});
     }
