@@ -9,11 +9,11 @@ module.exports = router;
 const commentModel = mongoose.model("Comment");
 
 router.get("/", (req, res) => {
-    Comment.find().sort('-PostDate').exec((err, post) => {
+    Comment.find().sort('-PostDate').exec((err, comment) => {
         if (err) {
             res.status(200).send({message: "There are no comments"});
         } else {
-            res.status(200).send({posts: post});
+            res.status(200).send({comments: comment});
         }
     });
 });
