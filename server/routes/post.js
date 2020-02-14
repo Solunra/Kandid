@@ -1,9 +1,13 @@
 const express = require("express");
 const { Post } = require('../database/schemas');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const router = express.Router();
-
+// parse application/x-www-form-urlencoded
+router.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+router.use(bodyParser.json());
 module.exports = router;
 
 const postModel = mongoose.model("Post");

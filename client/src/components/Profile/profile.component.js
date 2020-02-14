@@ -21,9 +21,9 @@ export default class Profile extends Component{
     }
     componentDidMount() {
         const response = fetch('http://localhost:8000/api/post',{
-            method:'PUT',
-            mode:'same-origin',
+            method:'GET'
         });
+        console.log(response.json);
     }
 
     render(){
