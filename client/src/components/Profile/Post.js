@@ -14,22 +14,27 @@ export default function Post() {
         <div>
             {posts.map(post => {
                 return(
-                    <div id="post">
+                    <div id="post" style={{alignContent: 'center'}}>
                         <div id = "user">
-                            {post.UserID}
+                            User: {post.UserID}
                         </div>
                         <div id = "image">
-                            {post.ImageLink}
+                            <img src={post.ImageLink} width="400px" height="400px"/>
                         </div>
                         <div id = "caption">
                             {post.Caption}
                         </div>
-                        <div id = "like">
-                            {post.Like}
+                        <div id="comments">
+                            <hr/>
+                            <input type="text"/>
                         </div>
-                        <div id = "postDate">
-                            {post.PostDate}
-                        </div>
+                        {/*TODO: This will be added later on*/}
+                        {/*<div id = "like">*/}
+                        {/*    {post.Like}*/}
+                        {/*</div>*/}
+                        {/*<div id = "postDate">*/}
+                        {/*    {post.PostDate}*/}
+                        {/*</div>*/}
                     </div>
                 )
             })}
