@@ -14,32 +14,34 @@ const userModel = mongoose.model("User");
 
 router.put("/", (req, res) => {
     var user = new userModel;
-    var check1=true, check2 = true;
-    console.log(req.body);
-    if(User.find({email:req.body.email}).count() != 0)
-    {
-        check1 = false;
-    }
+    var check2 = true;
+    var userTemp= JSON.parse(req.body.profile);
 
-    if(!(req.body.confirmPassword===(req.body.password)))
+    User.find({email:userTemp.email}).count().exec((err, count) => {
+
+        if (count != 0) {
+            console.log("Username already exists");
+            res.status(201).send("Username already exists");
+        }
+    });
+    if(!(userTemp.confirmPassword===(userTemp.password)))
     {
         check2=false;
     }
-    console.log("check1:" + check1);
-    console.log("check2:" + check2);
-    if(check1 && check2)
-    {
-        user.firstname= req.body.firstname;
-        user.lastname = req.body.lastname;
-        user.email = req.body.email;
-        user.password = req.body.password;
-        user.save();
-        res.status(200).send("User succesfully registered");
-    }
-    else{
-        res.status(201).send("User did not succesfully registered");
-    }
 
+    if(check2)
+    {
+        user.firstname= userTemp.firstname;
+        user.lastname = userTemp.lastname;
+        user.email = userTemp.email;
+        user.password = userTemp.password;
+        user.save();
+        res.redirect("http://localhost:3000/wall");
+    }
+    else
+    {
+        res.status(202).send("password not same");
+    }
 });
 
 router.get("/test", (req, res) => {

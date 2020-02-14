@@ -20,13 +20,12 @@ export default class SignUp extends Component{
         event.preventDefault();
         let json=JSON.stringify(this.state);
         console.log(json);
-        // const response=fetch("http://localhost:8000/api/register",{
-        //     method:"PUT",
-        //     body:{profile:this.json}
-        // }).then(response=>console.log(response));
         request
             .put("http://localhost:8000/api/register")
-            .send({profile: json}).then();
+            .send({profile: json})
+            .end((err,res) => {
+            // Calling the end function will send the request
+        });
     };
     handleChange(event){
         this.setState({[event.target.name]:event.target.value});
