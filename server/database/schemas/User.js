@@ -8,9 +8,9 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     firstname: { type: String },
     lastname: { type: String },
-    username: { type: String },
+    email: { type: String },
     password: {type: String},
-    added_on: {type: Date}
+    added_on: {type: Date, default: Date.now}
 });
 
 userSchema.plugin(MongooseAutoIncrementID.plugin, {
