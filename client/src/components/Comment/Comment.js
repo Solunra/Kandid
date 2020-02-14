@@ -10,10 +10,9 @@ export default class Comment extends react.Component {
         fetch("localhost:8000/api/comments")
             .then(res => res.json())
             .then((res) => {
-                if (res.comments === []) {
+                if (res.comments !== []) {
+                    this.state.postComments.push(res.comments);
                     this.setState({
-                        userID: res.userID,
-                        postComments: res.comments,
                         commentsPresent: true
                     })
                 }
