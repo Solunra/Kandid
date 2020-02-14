@@ -14,8 +14,19 @@ export default class Profile extends Component{
             posts: []
         };
     };
+    // UserID: { type: String },
+    // ImageLink: { type: String },
+    // Caption: { type: String },
+    // Like: { type: Number },
     handlePost = (event) => {
         console.log("posting");
+        const link=prompt("Enter the link of the picture you which to post:");
+        console.log(link);
+        let json ={post:{ImageLink:link,Caption:"It's been a while since my last post"}};
+        console.log(json);
+        request.put('http://localhost:8000/api/post')
+            .send(json)
+            .then(res=>{console.log(res)});
     };
     componentDidMount() {
         // const response = fetch('http://localhost:8000/api/post',{
