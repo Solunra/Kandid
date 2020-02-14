@@ -12,12 +12,10 @@ module.exports = router;
 
 const userModel = mongoose.model("User");
 
-router.put("/", (req, res) => {
+router.put("/", (req, res) => {git
     var user = new userModel;
     var check1=true, check2 = true;
-    console.log(req.body.email);
-    console.log(req.body.firstname);
-    console.log(req.email);
+    console.log(req.body);
     if(User.find({email:req.body.email}).count() != 0)
     {
         check1 = false;

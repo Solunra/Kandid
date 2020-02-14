@@ -15,14 +15,15 @@ export default class SignUp extends Component{
         this.handleChange =this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    handleSubmit(event){
+    handleSubmit=(event)=>{
         event.preventDefault();
         let json=JSON.stringify(this.state);
-        const response=fetch("http://localhost:8000",{
-            method:"POST",
-            body:[json]
-        });
-        console.log(response);
+        console.log(json);
+        const response=fetch("http://localhost:8000/api/register",{
+            method:"PUT",
+            body:{profile:this.json}
+        }).then(response=>console.log(response));
+        console.log(response.body);
     }
     handleChange(event){
         this.setState({[event.target.name]:event.target.value});
