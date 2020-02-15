@@ -1,0 +1,26 @@
+#user{
+    border: 1px;
+    font-weight: bold;
+    Margin: 35px 0px 0px 0px;
+    position: relative;
+    left: 30%;
+}
+#image{
+    align-content: center;
+    position: relative;
+    left: 30%;
+}
+#caption{
+    padding: 0px 0px 0px 5px;
+    Margin: 0px 0px 20px 0px;
+    border-radius: 20px;
+    align-content: center;
+    width: 300px;
+    position: relative;
+    left: 30%;
+}
+#comments{
+    width: 350px;
+    position: relative;
+    left: 30%;
+}

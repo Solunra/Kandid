@@ -3,7 +3,12 @@ const app = express();
 const port = 8000;
 
 require('./database');
-
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
 const routes = require('./routes/index');
 
 // TODO remove this once the front end has been implemented

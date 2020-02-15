@@ -6,9 +6,11 @@ const immutablePlugin = require('mongoose-immutable');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    username: { type: String },
+    firstname: { type: String },
+    lastname: { type: String },
+    email: { type: String },
     password: {type: String},
-    added_on: {type: Date}
+    added_on: {type: Date, default: Date.now}
 });
 
 userSchema.plugin(MongooseAutoIncrementID.plugin, {
