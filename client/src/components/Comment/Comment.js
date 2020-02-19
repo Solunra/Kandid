@@ -1,33 +1,35 @@
-const react = require('react');
-const Reply = require('./Reply');
+import React from 'react';
+import request from 'superagent';
+import Reply from './Reply'
 
-export default class Comment extends react.Component {
+export default class Comment extends React.Component {
     state = {
-      postComments: [],
-      commentsPresent: false
+        postComments: [],
+        commentsPresent: false
     };
     getComments = () => {
-        fetch("localhost:8000/api/comments")
-            .then(res => res.json())
-            .then((res) => {
-                if (res.comments === []) {
-                    this.setState({
-                        userID: res.userID,
-                        postComments: res.comments,
-                        commentsPresent: true
-                    })
-                }
-            });
+        // request.get("localhost:8000/api/comments")
+        //     .send(this.props.PostID)
+        //     .then(res => res.json())
+        //     .then(res => {
+        //         if (res.comments === []) {
+        //             this.setState({
+        //                 userID: res.userID,
+        //                 postComments: res.comments,
+        //                 commentsPresent: true
+        //             })
+        //         }
+        //     })
     };
     render()
     {
         this.getComments();
-        return ({PostID}) => (
+        return () => (
             <div className = "comments">
                 <table>
                 {this.state.postComments.map(comment => {
                     return (
-                        <tr><td>{this.state.userID}</td><td>{comment}</td></tr>
+                        <tr><td>{comment.UserID}</td><td>{comment.Comment}</td></tr>
                 )
                 })}
                 <tr><td>MyUserIdPlaceholder</td><td><Reply PostID = {this.props.PostId} /></td></tr>
