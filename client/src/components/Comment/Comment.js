@@ -12,9 +12,8 @@ export default class Comment extends React.Component {
         //     .send(this.props.PostID)
         //     .then(res => res.json())
         //     .then(res => {
-        //         if (res.comments === []) {
+        //         if (res.comments !== []) {
         //             this.setState({
-        //                 userID: res.userID,
         //                 postComments: res.comments,
         //                 commentsPresent: true
         //             })
