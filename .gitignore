@@ -1,5 +1,4 @@
 ﻿.idea/
 .vs/
-bin/
-obj/
-Properties/
+node_modules/
+Kandid.iml
