@@ -40,14 +40,19 @@ router.put("/", (req, res) => {
 
     post.Caption = req.body.post.Caption;
     post.Like = 0;
-    // var imageFile = req.files.image;
-    // post.ImageLink = uploadPath + imageFile.name;
-    // imageFile.mv(post.ImageLink, (err) => {
-    //    if (err) {
-    //        res.status(500).send(err);
-    //    }
-    // });
-    post.ImageLink=req.body.post.ImageLink;
-    post.save();
-    res.status(200).send("Post successfully posted");
+    var imageFile = req.files.image;
+    if(imageFile.size < (30 * Math.pow(10,6))){
+        post.ImageLink = uploadPath + imageFile.name;
+        imageFile.mv(post.ImageLink, (err) => {
+            if (err) {
+                res.status(500).send(err);
+            }
+        });
+        post.ImageLink=req.body.post.ImageLink;
+        post.save();
+        res.status(200).send("Post successfully posted");
+    }
+    else {
+        res.status(400).send("Image is too large");
+    }
 });
