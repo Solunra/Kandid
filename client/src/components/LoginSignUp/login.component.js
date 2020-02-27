@@ -1,6 +1,7 @@
 import React,{Component} from "react";
-import {BrowserRouter as Router, Link} from "react-router-dom";
+import {Link, Route, Switch} from "react-router-dom";
 import './index.css';
+import request from 'superagent';
 
 export default  class Login extends Component{
     constructor(props) {
@@ -13,15 +14,19 @@ export default  class Login extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
+
+    handleSubmit=(event)=>{
+        event.preventDefault();
+        let json=JSON.stringify(this.state);
+        console.log(json);
+        request
+            .put("http://localhost:8000/api/login")
+            .send({profile: json})
+            .end((err,res) => {
+            });
+    };
     handleChange(event){
         this.setState({[event.target.name]:event.target.value});
-    }
-    handleSubmit(event){
-        let json=JSON.stringify(this.state);
-        const response = fetch('http://localhost:8000',{
-            method:'POST',
-            body:[json]
-        });
     }
     render() {
         return(
@@ -45,12 +50,12 @@ export default  class Login extends Component{
 
                 <div className="form-group">
                     <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" name="email" />
+                    <input type="email" className="form-control" placeholder="Enter email" name="email" onChange={this.handleChange}/>
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" name="password" />
+                    <input type="password" className="form-control" placeholder="Enter password" name="password" onChange={this.handleChange}/>
                 </div>
 
                 <div className="form-group">
