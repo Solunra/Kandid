@@ -19,10 +19,6 @@ export default class Profile extends Component{
         this.openUploadingWindow= this.openUploadingWindow.bind(this);
         this.closeUploadingWindow=this.closeUploadingWindow.bind(this);
     };
-    // UserID: { type: String },
-    // ImageLink: { type: String },
-    // Caption: { type: String },
-    // Like: { type: Number },
     openUploadingWindow(){
         console.log(this.state.showingWindow);
         this.setState({showingWindow:true})
@@ -33,22 +29,14 @@ export default class Profile extends Component{
     handlePost = (event) => {
         event.preventDefault();
         let file=document.getElementById('uploadedImage');
-        console.log(file.files);
-        if(file.files.length!=0){
-            let image=file.files[0];
-            let json={post:{image:image,Caption:"new post"}};
-            console.log(json);
-            request.put('http://localhost:8000/api/post')
-                .send(json)
+        if(file.files.length !== 0){
+            let image = file.files[0];
+            let caption = document.getElementById('Caption').value;
+            request.post('http://localhost:8000/api/post')
+                .attach('image', image)
+                .field('Caption', caption)
                 .then(res=>{console.log(res)});
         }
-        // const link=prompt("Enter the link of the picture you which to post:");
-        // console.log(link);
-        // let json ={post:{ImageLink:link,Caption:"It's been a while since my last post"}};
-        // console.log(json);
-        // request.put('http://localhost:8000/api/post')
-        //     .send(json)
-        //     .then(res=>{console.log(res)});
     };
 
     render(){
@@ -70,10 +58,15 @@ export default class Profile extends Component{
                     </IconButton>
                     <Backdrop  open={this.state.showingWindow}>
                         <div id='uploadImageForm'>
-                            <form onSubmit={this.handlePost}>
-                                <label for='uploadedImage'>Upload Image</label><br/>
+                            <form ref='uploadForm'
+                                  id='uploadForm'
+                                  action='http://localhost:8000/api/post'
+                                  method='post'
+                                  encType="multipart/form-data"
+                                  onSubmit={this.handlePost}>
+                                <label>Upload Image</label><br/>
                                 <input id='uploadedImage' type='file' accept='image/*'/>
-                                <label for='Caption'>Caption</label>
+                                <label>Caption</label>
                                 <input id='Caption' type='text'/><br/>
                                 <button id='cancel' onClick={this.closeUploadingWindow}>Cancel</button>
                                 <button id='submit' type='submit'>Post</button>

@@ -19,7 +19,7 @@ app.get('/', (req, res) => res.send("Web Page Test"));
 app.use('/', routes);
 
 // Allows static images to be placed in the /images folder
-app.use('/images', express.static(__dirname + '/images'));
+app.use('/images', express.static('server/routes/images'));
 
 // Allows file upload
 app.use(fileUpload());

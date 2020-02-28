@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './index.css'
 import request from 'superagent'
 import './image.css'
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
-    request.get('http://localhost:8000/api/post')
+
+    useEffect(() => {request.get('http://localhost:8000/api/post')
         .then(res => res.body.posts)
         .then(data => {
             setPosts(data);
-        });
+        })}, []);
+
 
     return (
         <div>
