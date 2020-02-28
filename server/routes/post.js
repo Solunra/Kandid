@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
         if (err) {
             res.status(200).send({message: "There are no posts"});
         } else {
-            res.status(200).send({posts: post, message: __dirname});
+            res.status(200).send({posts: post});
         }
     });
 });

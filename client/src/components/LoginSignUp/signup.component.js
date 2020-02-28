@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {Link, Route, Switch} from "react-router-dom";
 import './index.css';
 import request from 'superagent';
+import  { Redirect } from 'react-router-dom'
 
 export default class SignUp extends Component{
     constructor(props) {
@@ -11,7 +12,8 @@ export default class SignUp extends Component{
             lastName:"",
             email:"",
             password:"",
-            confirmPassword:""
+            confirmPassword:"",
+            toWall:false
         };
         this.handleChange =this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +26,10 @@ export default class SignUp extends Component{
             .put("http://localhost:8000/api/register")
             .send({profile: json})
             .end((err,res) => {
-            // Calling the end function will send the request
+                if(res.status == 200)
+                {
+                    this.setState({toWall:true});
+                }
         });
     };
     handleChange(event){
@@ -32,6 +37,9 @@ export default class SignUp extends Component{
     }
 
     render() {
+        if(this.state.toWall===true){
+            return <Redirect to='/'/>
+        }
         return(
             <div className="App">
                 <form onSubmit={this.handleSubmit}>

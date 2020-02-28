@@ -20,8 +20,11 @@ router.put("/", (req, res) => {
             console.log("Incorrect user or password");
             res.status(201).send("Incorrect user or password");
         }
+        else
+        {
+            res.status(200).send("Successful login! redirect user");
+        }
     });
-        res.redirect("http://localhost:3000/wall");
 });
 
 
