@@ -37,6 +37,8 @@ export default class Profile extends Component{
                 .field('Caption', caption)
                 .then(res=>{console.log(res)});
         }
+        this.closeUploadingWindow();
+        window.location.reload(false);
     };
 
     render(){
