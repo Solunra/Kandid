@@ -9,7 +9,8 @@ module.exports = router;
 const commentModel = mongoose.model("Comment");
 
 router.get("/", (req, res) => {
-    Comment.find().sort('-PostDate').exec((err, comment) => {
+    let id = req.body.PostID;
+    Comment.find({PostID: id}).sort('-PostDate').exec((err, comment) => {
         if (err) {
             res.status(200).send({message: "There are no comments"});
         } else {
@@ -30,7 +31,7 @@ router.get("/test", (req, res) => {
 router.put("/", (req, res) => {
     var comment = new commentModel;
     comment.UserID = req.user.UserID;
-    comment.PostID = req.user.PostID;
+    comment.PostID = req.body.post.PostID;
     comment.Comment = req.body.post.Comment;
     comment.save();
     res.status(200).send("Comment successfully posted");
