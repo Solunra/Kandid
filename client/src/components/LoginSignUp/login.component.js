@@ -28,6 +28,7 @@ export default  class Login extends Component{
                 {
                     this.setState({toWall:true});
                 }
+
             });
     };
     handleChange(event){

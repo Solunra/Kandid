@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './index.css'
 import request from 'superagent'
+import './image.css'
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
@@ -19,7 +20,7 @@ export default function Post() {
                             User: {post.UserID}
                         </div>
                         <div id = "image">
-                            <img src={post.ImageLink} width="400px" height="400px"/>
+                            <img src={post.ImageLink}/>
                         </div>
                         <div id = "caption">
                             {post.Caption}

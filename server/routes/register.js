@@ -41,7 +41,6 @@ router.put("/", (req, res) => {
     });
 });
 
-
 router.get("/test", (req, res) => {
     const user0 = new userModel;
     user0.firstname = "Noah";

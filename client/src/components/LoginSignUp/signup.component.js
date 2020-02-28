@@ -4,8 +4,6 @@ import './index.css';
 import request from 'superagent';
 import  { Redirect } from 'react-router-dom'
 
-
-
 export default class SignUp extends Component{
     constructor(props) {
         super(props);
@@ -23,6 +21,7 @@ export default class SignUp extends Component{
     handleSubmit=(event)=>{
         event.preventDefault();
         let json=JSON.stringify(this.state);
+        console.log(json);
         request
             .put("http://localhost:8000/api/register")
             .send({profile: json})
@@ -31,7 +30,6 @@ export default class SignUp extends Component{
                 {
                     this.setState({toWall:true});
                 }
-
         });
     };
     handleChange(event){
