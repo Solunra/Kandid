@@ -5,3 +5,4 @@ Kandid.iml
 
 package-lock.json
 /client/package-lock.json
+/server/routes/images/
