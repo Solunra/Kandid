@@ -13,6 +13,8 @@ module.exports = router;
 const postModel = mongoose.model("Post");
 const uploadPath = __dirname + "../images/";
 
+const resourceLink = "http://localhost:8000/";
+
 router.get("/", (req, res) => {
     Post.find().sort('-PostDate').exec((err, post) => {
         if (err) {
@@ -42,13 +44,12 @@ router.put("/", (req, res) => {
     post.Like = 0;
     var imageFile = req.files.image;
     if(imageFile.size < (30 * Math.pow(10,6))){
-        post.ImageLink = uploadPath + imageFile.name;
-        imageFile.mv(post.ImageLink, (err) => {
+        imageFile.mv(uploadPath, (err) => {
             if (err) {
                 res.status(500).send(err);
             }
         });
-        post.ImageLink=req.body.post.ImageLink;
+        post.ImageLink=resourceLink + imageFile.name;
         post.save();
         res.status(200).send("Post successfully posted");
     }
