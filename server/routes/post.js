@@ -42,6 +42,7 @@ router.put("/", (req, res) => {
 
     post.Caption = req.body.post.Caption;
     post.Like = 0;
+
     var imageFile = req.files.image;
     if(imageFile.size < (30 * Math.pow(10,6))){
         imageFile.mv(uploadPath, (err) => {
@@ -56,4 +57,5 @@ router.put("/", (req, res) => {
     else {
         res.status(400).send("Image is too large");
     }
+
 });
