@@ -1,5 +1,5 @@
 import React,{Component} from "react";
-import {Link, Route, Switch} from "react-router-dom";
+import {Link, Redirect, Route, Switch} from "react-router-dom";
 import './index.css';
 import request from 'superagent';
 
@@ -9,7 +9,8 @@ export default  class Login extends Component{
         this.state={
             email:"",
             password:"",
-            rememberMe:false
+            rememberMe:false,
+            toWall:false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -23,12 +24,19 @@ export default  class Login extends Component{
             .put("http://localhost:8000/api/login")
             .send({profile: json})
             .end((err,res) => {
+                if(res.status == 200)
+                {
+                    this.setState({toWall:true});
+                }
             });
     };
     handleChange(event){
         this.setState({[event.target.name]:event.target.value});
     }
     render() {
+        if(this.state.toWall===true){
+            return <Redirect to='/wall'/>
+        }
         return(
             <div className="App">
             <form onSubmit={this.handleSubmit}>
