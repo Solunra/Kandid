@@ -12,6 +12,7 @@ export default class Reply extends React.Component {
                 .query({PostID: this.props.PostID, Comment: this.state.comment})
                 .then(console.log(this.props.PostID));
         }
+        window.location.reload(false)
     };
 
     handleChange = (e) => {

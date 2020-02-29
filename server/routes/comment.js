@@ -11,7 +11,7 @@ const commentModel = mongoose.model("Comment");
 
 router.get("/", (req, res) => {
     let id = req.query.PostID;
-    Comment.find({'PostID':id}).sort('-PostDate').exec((err, comment) => {
+    Comment.find({'PostID':id}).sort('PostDate').exec((err, comment) => {
         if (err) {
             res.status(200).send({message: "There are no comments"});
         } else {
