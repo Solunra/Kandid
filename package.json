@@ -17,6 +17,7 @@
     "express-fileupload": "^1.1.6",
     "mocha": "^7.0.1",
     "mongoose": "^5.8.11",
+    "multer": "^1.4.2",
     "ramda": "^0.27.0"
   },
   "devDependencies": {

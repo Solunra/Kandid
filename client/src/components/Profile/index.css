@@ -24,3 +24,14 @@
     position: relative;
     left: 30%;
 }
+#uploadImageForm{
+    width: 30%;
+    height: 50%;
+    background: white;
+}
+#submit{
+    top: 10px;
+}
+#cancel{
+    top:20px;
+}
