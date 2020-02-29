@@ -12,6 +12,7 @@ module.exports = router;
 const postModel = mongoose.model("Post");
 
 const resourceLink = "http://localhost:8000/images/";
+
 router.get("/", (req, res) => {
     Post.find().sort('-PostDate').exec((err, post) => {
         if (err) {

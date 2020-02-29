@@ -1,0 +1,10 @@
+table {
+    border: 1px solid gray;
+}
+tr {
+    margin: 10px;
+}
+td {
+    border: 1px solid black;
+    margin: 5px;
+}
