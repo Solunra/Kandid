@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import request from 'superagent';
 
 export default class Reply extends React.Component {
@@ -7,26 +7,25 @@ export default class Reply extends React.Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        /*TODO: uncomment this when Comment Service has been done
-        **/
-        // if (this.state.comment !== "") {
-        //     request
-        //         .put("localhost:8000/api/comment")
-        //         .send({PostID: this.props.PostID, comment: this.state.comment})
-        //         .then(r => console.debug(r));
-        // }
+        if (this.state.comment !== "") {
+            request.put("http://localhost:8000/api/comment")
+                .query({PostID: this.props.PostID, Comment: this.state.comment})
+                .then(console.log(this.props.PostID));
+        }
     };
+
     handleChange = (e) => {
         this.setState({comment:e.target.value});
     };
+
     render(){
-        return({PostID}) => (
+        return(
             <div className = "reply">
                 <form onSubmit = {this.handleSubmit}>
-                    <input id = "toadd" placeholder="Enter your comment here" onChange={this.handleChange}/>
-                    <button type = "Submit"/>
+                    <input placeholder="Enter your comment here" onChange={this.handleChange}/>
+                    <button type = "Submit">Reply</button>
                 </form>
             </div>
-        )
-    }
+    )
+}
 }

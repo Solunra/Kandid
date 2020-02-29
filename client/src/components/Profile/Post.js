@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './index.css'
 import request from 'superagent'
 import './image.css'
+import Comment from "../Comment";
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
@@ -27,9 +28,8 @@ export default function Post() {
                         <div id = "caption">
                             {post.Caption}
                         </div>
-                        <div id="comments">
-                            <hr/>
-                            <input type="text"/>
+                        <div id = "comments">
+                            <Comment PostID = {post.PostID}/>
                         </div>
                         {/*TODO: This will be added later on*/}
                         {/*<div id = "like">*/}

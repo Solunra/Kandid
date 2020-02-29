@@ -15,6 +15,4 @@ router.use('/api/login', login);
 router.use('/api/register', register);
 router.use(cors());
 
-router.use(cors());
-
 module.exports = router;
