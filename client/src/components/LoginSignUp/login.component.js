@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch, Redirect } from "react-router-dom";
 import "./index.css";
 import request from "superagent";
 
@@ -9,7 +9,8 @@ export default class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      rememberMe: false
+      rememberMe: false,
+      toWall: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -17,7 +18,7 @@ export default class Login extends Component {
   componentDidMount() {
     const rememberMe = localStorage.getItem("rememberMe") === "true";
     const email = rememberMe ? localStorage.getItem("email") : "";
-    this.setState({ [email]: email, [rememberMe]: rememberMe });
+    this.setState({ email: email, rememberMe: rememberMe });
   }
 
   handleSubmit = event => {
@@ -31,7 +32,11 @@ export default class Login extends Component {
     request
       .put("http://localhost:8000/api/login")
       .send({ profile: json })
-      .end((err, res) => {});
+      .end((err, res) => {
+        if (res.status == 200) {
+          this.setState({ toWall: true });
+        }
+      });
   };
 
   handleChange = event => {
@@ -41,8 +46,11 @@ export default class Login extends Component {
     this.setState({ [input.name]: value });
     //this.setState({ [event.target.name]: event.target.value });
   };
-  componentDidMount() {}
+
   render() {
+    if (this.state.toWall === true) {
+      return <Redirect to="/wall" />;
+    }
     return (
       <div className="App">
         <form onSubmit={this.handleSubmit}>
@@ -76,7 +84,7 @@ export default class Login extends Component {
               className="form-control"
               placeholder="Enter email"
               name="email"
-              value={this.state.user}
+              value={this.state.email}
               onChange={this.handleChange}
             />
           </div>

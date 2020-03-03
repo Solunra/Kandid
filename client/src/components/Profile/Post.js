@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './index.css'
 import request from 'superagent'
+import './image.css'
+import Comment from "../Comment";
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
-    request.get('http://localhost:8000/api/post')
+
+    useEffect(() => {request.get('http://localhost:8000/api/post')
         .then(res => res.body.posts)
         .then(data => {
             setPosts(data);
-        });
+        })}, []);
+
 
     return (
         <div>
@@ -19,14 +23,13 @@ export default function Post() {
                             User: {post.UserID}
                         </div>
                         <div id = "image">
-                            <img src={post.ImageLink} width="400px" height="400px"/>
+                            <img src={post.ImageLink}/>
                         </div>
                         <div id = "caption">
                             {post.Caption}
                         </div>
-                        <div id="comments">
-                            <hr/>
-                            <input type="text"/>
+                        <div id = "comments">
+                            <Comment PostID = {post.PostID}/>
                         </div>
                         {/*TODO: This will be added later on*/}
                         {/*<div id = "like">*/}
