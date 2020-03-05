@@ -13,7 +13,6 @@ describe("Post Tests", () => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
                 expect(res).to.be.json;
-                expect(res.body).to.include("post");
                 done();
             });
     });
@@ -21,6 +20,9 @@ describe("Post Tests", () => {
     it("putPostTest", done => {
         chai.request(app)
             .post('/api/post/')
+            //todo find a way to end the test on travis
+            .attach('image', '/image/cat.jpg')
+            .field('Caption', "hi")
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
