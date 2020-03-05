@@ -24,6 +24,6 @@ app.use('/images', express.static('server/routes/images'));
 // Allows file upload
 app.use(fileUpload());
 
-const server = app.listen(port, () => console.log(`Web page started on port ${port}`));
+app.listen(port, () => console.log(`Web page started on port ${port}`));
 
-module.exports = server;
+module.exports = app;
