@@ -1,7 +1,7 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
-const port = 8000;
+const port = process.env.port || 8000;
 
 require('./database');
 app.use(function(req, res, next) {
