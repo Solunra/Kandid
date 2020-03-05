@@ -7,7 +7,7 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "test": "scripts/test-script.sh",
+    "test": "mocha ./test --recursive",
     "client": "scripts/client-script.sh"
   },
   "dependencies": {
