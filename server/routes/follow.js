@@ -1,23 +1,24 @@
-const User = require("../database/schemas/User");
-const { Follow } = require("../database/schemas");
+const { Follower } = require("../database/schemas");
 const express = require("express");
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const router = express.Router();
 
+router.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+router.use(bodyParser.json());
+
+
 module.exports = router;
 
-const followModel = mongoose.model("Follow")
+const followModel = mongoose.model("Follower");
 
 router.put("/", (req, res) => {
-  let follower = req.body.follower;
-  let followee = req.body.followee;
-
-  let follow = new followModel({
-    follower: follower,
-    followee: followee
-  });
-
+  var follow=new followModel;
+  follow.followee=req.query.followee;
+  follow.follower=req.query.follower;
+  console.log(follow);
   follow.save(function(err) {
     if (err) {
       return res.status(404).json({
@@ -35,7 +36,13 @@ router.put("/", (req, res) => {
     });
   });
 });
-
+router.get("/test", (req, res) => {
+  const follow0 = new followModel;
+  follow0.follower = "testFollower";
+  follow0.followee = "testFollowee";
+  follow0.save();
+  res.send("[Follow has been saved to the Database]");
+});
 router.get("/unfollow", (req, res) => {
   let follower = req.body.follower;
   let followee = req.body.followee;

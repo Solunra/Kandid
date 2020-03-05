@@ -44,14 +44,14 @@ export default function Followers(){
         console.log(`${followee} is Following ${user}`);
         const jsonString=`follower:${user},followee:${followee}`;
         const json=JSON.stringify(jsonString);
-        //TIGRAN when the backend for follow is done and merged this needs to be uncommented
-        // request.put('http://localhost:8000/api/follow')
-        //     .send(json)
-        //     .end((err,res)=>{
-        //     if (res.status== 200){
-        //         console.log(res.status);
-        //     }
-        // });
+        console.log(json);
+        request.put('http://localhost:8000/api/follow')
+            .query({follower:user,followee:followee})
+            .end((err,res)=>{
+            if (res.status== 200){
+                console.log(res.status);
+            }
+        });
     }
     return(
       <div className={classes.root}>
