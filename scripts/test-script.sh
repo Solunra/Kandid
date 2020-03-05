@@ -1,3 +1,2 @@
 npm install
-npm start
-mocha ../test --recursive
+npm start && mocha ../test --recursive

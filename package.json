@@ -7,8 +7,8 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "test": "scripts/test-script.sh",
-    "client": "scripts/client-script.sh"
+    "test": "/scripts/test-script.sh",
+    "client": "/scripts/client-script.sh"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
