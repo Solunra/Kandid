@@ -21,7 +21,7 @@ describe("Post Tests", () => {
         chai.request(app)
             .post('/api/post/')
             //todo find a way to end the test on travis
-            .attach('image', '/image/cat.jpg')
+            .attach('image', __dirname + '/image/cat.jpg')
             .field('Caption', "hi")
             .end((err, res) => {
                 expect(err).to.be.null;
