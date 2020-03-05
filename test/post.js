@@ -13,8 +13,7 @@ it("getPostTest", () => {
             expect(res).to.have.status(200);
             expect(res).to.be.json;
             expect(res).to.include("post");
-        })
-        .end();
+        });
 });
 
 it("putPostTest", () => {
@@ -24,7 +23,6 @@ it("putPostTest", () => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
             expect(res).to.be.json;
-        })
-        .end();
+        });
 });
 
