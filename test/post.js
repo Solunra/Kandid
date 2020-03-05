@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe("Post Tests", () => {
     it("getPostTest", done => {
         chai.request(app)
-            .get('/api/login/')
+            .get('/api/post/')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
@@ -19,7 +19,7 @@ describe("Post Tests", () => {
 
     it("postPostTest", done => {
         chai.request(app)
-            .post('/api/register/')
+            .post('/api/post/')
             .attach('image', __dirname + '/image/cat.jpg')
             .field('Caption', "hi")
             .end((err, res) => {
