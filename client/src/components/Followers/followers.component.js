@@ -12,21 +12,24 @@ const useStyles =makeStyles(theme=>({
         display:'flex',
         flexWrap:'wrap',
         justifyContent:'space-around',
-        overflow:'hidden',
         background:theme.palette.background.paper,
     },
     gridList:{
-        flexWrap:'nowrap',
+        width:700,
+        height:800,
+        flexWrap:'wrap',
         transform:'translateZ(0)',
     },
     title:{
-        color:theme.palette.primary.light,
+        color:theme.palette.primary.main.fontcolor("blue"),
     },
     titleBar:{
         background:'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
     },
 }));
-export default function followers(){
+const images="http://localhost:8000/images/3b240f807c2dae99d87edb13c4536e73";
+const followee=localStorage.getItem("email");
+export default function Followers(){
     const classes=useStyles();
     const [follower,setFollower] = useState([]);
     useEffect(()=>{
@@ -36,20 +39,24 @@ export default function followers(){
             .then(data => {
                 setFollower(data);
     })},[]);
-
+    function Follow(user,e){
+        e.preventDefault();
+        console.log(`${followee} is Following ${user}`);
+    }
     return(
       <div className={classes.root}>
-          <GridList className={classes.gridList} cols={1}>
+          <GridList className={classes.gridList} cellHeight={200} spacing={1} cols={1}>
               {follower.map(user =>(
-                  <GridListTile key={user.image}>
+                  <GridListTile key={images}>
+                      <img src={images} alt="image not shown"/>
                     <GridListTileBar
-                        title={user.userName}
+                        title={user.email}
                         classes={{
                             root:classes.titleBar,
                             title:classes.title,
                         }}
                         actionIcon={
-                            <IconButton aria-label={`star ${user.userName}`}>
+                            <IconButton aria-label={`star ${user.email}`} onClick={e=>Follow(user.email,e)}>
                                 <PersonAddOutlinedIcon className={classes.title}/>
                             </IconButton>
                         }
