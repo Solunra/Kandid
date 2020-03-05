@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 describe("Post Tests", () => {
     it("getPostTest", done => {
         chai.request(app)
-            .get('http://localhost:8000/api/post/')
+            .get('/api/post/')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
@@ -20,7 +20,7 @@ describe("Post Tests", () => {
 
     it("putPostTest", done => {
         chai.request(app)
-            .post('http://localhost:8000/api/post/')
+            .post('/api/post/')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
