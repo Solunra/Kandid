@@ -1,14 +1,14 @@
 var chaiHttp = require("chai-http");
 var chai = require('chai');
 var expect = chai.expect;
-
+var app = require('../server')
 var postApi = "http://localhost:8000/api/post";
 
 chai.use(chaiHttp);
 
 it("getPostTest", () => {
-    chai.request(postApi)
-        .get('/')
+    chai.request(app)
+        .get(postApi)
         .then((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
@@ -18,8 +18,8 @@ it("getPostTest", () => {
 });
 
 it("putPostTest", () => {
-    chai.request(postApi)
-        .put('/')
+    chai.request(app)
+        .put(postApi)
         .then((err, res) => {
             expect(err).to.be.null;
             expect(res).to.have.status(200);
