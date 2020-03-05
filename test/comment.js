@@ -5,10 +5,11 @@ const app = require('../server');
 
 chai.use(chaiHttp);
 
-describe("Post Tests", () => {
-    it("getPostTest", done => {
+describe("Comment Tests", () => {
+    it("getCommentTest", done => {
         chai.request(app)
-            .get('/api/login/')
+            .get('/api/comment/')
+            .send({PostID: "1"})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
@@ -17,11 +18,11 @@ describe("Post Tests", () => {
             });
     });
 
-    it("postPostTest", done => {
+    it("putCommentTest", done => {
         chai.request(app)
-            .post('/api/register/')
-            .attach('image', __dirname + '/image/cat.jpg')
-            .field('Caption', "hi")
+            .put('/api/comment/')
+            .query({PostID: "1"})
+            .query({Comment: "this"})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
