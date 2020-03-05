@@ -31,22 +31,32 @@ const images="http://localhost:8000/images/3b240f807c2dae99d87edb13c4536e73";
 const followee=localStorage.getItem("email");
 export default function Followers(){
     const classes=useStyles();
-    const [follower,setFollower] = useState([]);
+    const [users,setUsers] = useState([]);
     useEffect(()=>{
         //TODO:request all the users in the database
         request.get('http://localhost:8000/api/user')
             .then(res => res.body.users)
             .then(data => {
-                setFollower(data);
+                setUsers(data);
     })},[]);
     function Follow(user,e){
         e.preventDefault();
         console.log(`${followee} is Following ${user}`);
+        const jsonString=`follower:${user},followee:${followee}`;
+        const json=JSON.stringify(jsonString);
+        //TIGRAN when the backend for follow is done and merged this needs to be uncommented
+        // request.put('http://localhost:8000/api/follow')
+        //     .send(json)
+        //     .end((err,res)=>{
+        //     if (res.status== 200){
+        //         console.log(res.status);
+        //     }
+        // });
     }
     return(
       <div className={classes.root}>
           <GridList className={classes.gridList} cellHeight={200} spacing={1} cols={1}>
-              {follower.map(user =>(
+              {users.map(user =>(
                   <GridListTile key={images}>
                       <img src={images} alt="image not shown"/>
                     <GridListTileBar
