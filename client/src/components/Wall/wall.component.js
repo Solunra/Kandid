@@ -8,7 +8,7 @@ import request from 'superagent';
 import Post from './Post';
 import Backdrop from "@material-ui/core/Backdrop";
 
-export default class Profile extends Component{
+export default class Wall extends Component{
     constructor(props) {
         super(props);
         this.handlePost=this.handlePost.bind(this);
