@@ -15,6 +15,7 @@ export default class Profile extends Component{
         this.state = {
             posts: [],
             showingWindow:false,
+            userEmail: localStorage.getItem("email")
         };
         this.openUploadingWindow= this.openUploadingWindow.bind(this);
         this.closeUploadingWindow=this.closeUploadingWindow.bind(this);
@@ -35,6 +36,7 @@ export default class Profile extends Component{
             request.post('http://localhost:8000/api/post')
                 .attach('image', image)
                 .field('Caption', caption)
+                .field('UserID', this.state.userEmail)
                 .then(res=>{console.log(res)});
         }
         this.closeUploadingWindow();
