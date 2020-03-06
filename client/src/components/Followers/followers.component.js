@@ -33,7 +33,6 @@ export default function Followers(){
     const classes=useStyles();
     const [users,setUsers] = useState([]);
     useEffect(()=>{
-        //TODO:request all the users in the database
         request.get('http://localhost:8000/api/user')
             .then(res => res.body.users)
             .then(data => {
