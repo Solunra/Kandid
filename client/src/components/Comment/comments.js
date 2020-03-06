@@ -27,11 +27,12 @@ export default function Comments(props){
     let temp=[];
     useEffect(()=>{
         request.get("http://localhost:8000/api/comment")
-            .query({PostID: props.PostID})
+            .query({PostID: props.PostId})
             .then(res => res.body.comments)
             .then(res => {
                 // this.setState({comments: res.comments})
                 setComments(res);
+                console.log(comments);
                 console.log(props.PostId);
             })},[]);
     if(temp !== []){
