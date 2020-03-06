@@ -6,8 +6,10 @@ import Comment from "../Comment";
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
+    const userEmail = localStorage.getItem("email");
 
     useEffect(() => {request.get('http://localhost:8000/api/post')
+        .query({email: userEmail})
         .then(res => res.body.posts)
         .then(data => {
             setPosts(data);
