@@ -24,7 +24,7 @@ export default class Login extends Component {
   handleSubmit = event => {
     const { email, password, rememberMe } = this.state;
     localStorage.setItem("rememberMe", rememberMe);
-    localStorage.setItem("email", rememberMe ? email : "");
+    localStorage.setItem("email",email);
 
     event.preventDefault();
     let json = JSON.stringify(this.state);

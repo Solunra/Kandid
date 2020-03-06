@@ -12,7 +12,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from "@material-ui/core/Avatar";
+import { createBrowserHistory } from 'history';
 
+const history=createBrowserHistory();
 const useStyles = makeStyles(theme => ({
     grow: {
         flexGrow: 1,
@@ -130,6 +132,15 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
+    function RedirectToWall(e){
+        console.log("Redirecting");
+        history.push('/wall');
+        window.location.reload(false);
+    }
+    function searchUsers(){
+        history.push('/users');
+        window.location.reload(false);
+    }
     return (
         <div className={classes.grow}>
             <AppBar position="static" color="white">
@@ -141,7 +152,7 @@ export default function PrimarySearchAppBar() {
                         aria-label="open drawer"
                     >
                     </IconButton>
-                    <Typography className={classes.title} variant="h4" noWrap>
+                    <Typography className={classes.title} variant="h4" noWrap onClick={RedirectToWall}>
                         Kandid
                     </Typography>
                     <div className={classes.search}>
@@ -155,6 +166,7 @@ export default function PrimarySearchAppBar() {
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            onClick={searchUsers}
                         />
                     </div>
                     <div className={classes.grow} />
