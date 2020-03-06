@@ -32,7 +32,7 @@ export default function Comments(props){
             .then(res => {
                 // this.setState({comments: res.comments})
                 setComments(res);
-                console.log(comments);
+                console.log(props.PostId);
             })},[]);
     if(temp !== []){
         return(
