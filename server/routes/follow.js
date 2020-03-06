@@ -49,7 +49,7 @@ router.get("/unfollow", (req, res) => {
   let follower = req.body.follower;
   let followee = req.body.followee;
 
-  follow.remove({ follower: follower, followee: followee }, (err, result) => {
+  Follower.remove({ follower: follower, followee: followee }, (err, result) => {
     if (err) {
       return res.status(404).json({
         success: false,

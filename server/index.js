@@ -1,7 +1,7 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
-const port = 8000;
+const port = process.env.port || 8000;
 
 require('./database');
 app.use(function(req, res, next) {
@@ -25,3 +25,5 @@ app.use('/images', express.static('server/routes/images'));
 app.use(fileUpload());
 
 app.listen(port, () => console.log(`Web page started on port ${port}`));
+
+module.exports = app;
