@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -79,22 +79,34 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-    let numberOfNotifications=0;
+    const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    function getNotification(){
-        request.get("http://localhost:8000/api/notification")
-            .query({email: localStorage.getItem("email")})
-            .then(res => res.body)
-            .then(res => {
-                numberOfNotifications = res.Flag;
-            });
-    };
 
     useEffect(()=>{
-        getNotification();
+        request.put("http://localhost:8000/api/notification")
+            .query({email: localStorage.getItem("email")})
+            .end((err,res) =>{
+                if(res.status==222){
+                    console.log("notification set");
+                   setNumberOfNotifications(1);
+                }
+            });
     },[]);
+
+    function removeNotification(e){
+        e.preventDefault();
+        setNumberOfNotifications(0);
+        request.put("http://localhost:8000/api/notification/remove")
+            .query({email: localStorage.getItem("email")})
+            .end((err,res) => {
+                if (res.status == 224) {
+                    console.log("removed notification");
+                }
+            });
+        window.location.reload(false);
+    }
 
 
     const handleProfileMenuOpen = event => {
@@ -113,39 +125,39 @@ export default function PrimarySearchAppBar() {
     const menuId = 'primary-search-account-menu';
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton aria-label="show 2 new notifications" color="inherit">
-                    {/*TODO:Use the real number of notification*/}
-                    <Badge badgeContent={numberOfNotifications} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    {/*TODO: Use Picture for avatar */}
-                    <Avatar className={classes.orange}>N</Avatar>
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
-        </Menu>
-    );
+    // const renderMobileMenu = (
+    //     <Menu
+    //         anchorEl={mobileMoreAnchorEl}
+    //         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    //         id={mobileMenuId}
+    //         keepMounted
+    //         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+    //         open={isMobileMenuOpen}
+    //         onClose={handleMobileMenuClose}
+    //     >
+    //         <MenuItem>
+    //             <IconButton aria-label="show 2 new notifications" color="inherit" onClick={console.log("PP")}>
+    //                 {/*TODO:Use the real number of notification*/}
+    //                 <Badge badgeContent={numberOfNotifications} color="secondary">
+    //                     <NotificationsIcon />
+    //                 </Badge>
+    //             </IconButton>
+    //             <p>Notifications</p>
+    //         </MenuItem>
+    //         <MenuItem onClick={handleProfileMenuOpen}>
+    //             <IconButton
+    //                 aria-label="account of current user"
+    //                 aria-controls="primary-search-account-menu"
+    //                 aria-haspopup="true"
+    //                 color="inherit"
+    //             >
+    //                 {/*TODO: Use Picture for avatar */}
+    //                 <Avatar className={classes.orange}>N</Avatar>
+    //             </IconButton>
+    //             <p>Profile</p>
+    //         </MenuItem>
+    //     </Menu>
+    // );
 
     function RedirectToWall(e){
         console.log("Redirecting");
@@ -187,9 +199,9 @@ export default function PrimarySearchAppBar() {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         {/*TODO:Use the real number of notification*/}
-                        <IconButton aria-label="show 2 new notifications" color="inherit">
-                            <Badge badgeContent={numberOfNotifications} color="secondary">
-                                <NotificationsIcon />
+                        <IconButton aria-label="show 2 new notifications" color="inherit" >
+                            <Badge badgeContent={numberOfNotifications} color="secondary" n>
+                                <NotificationsIcon onClick={removeNotification}/>
                             </Badge>
                         </IconButton>
                         <IconButton
@@ -216,7 +228,7 @@ export default function PrimarySearchAppBar() {
                     </div>
                 </Toolbar>
             </AppBar>
-            {renderMobileMenu}
+            {/*{renderMobileMenu}*/}
         </div>
     );
 }
