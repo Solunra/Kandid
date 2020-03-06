@@ -9,6 +9,7 @@ import {Wall} from '../Wall';
 import {Followers} from '../Followers';
 
 
+
 function App() {
   return (
       <Router>
