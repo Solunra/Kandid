@@ -14,7 +14,7 @@ const userModel = mongoose.model("User");
 
 router.put("/", (req, res) => {
     var user = new userModel;
-    var userTemp= JSON.parse(req.body.profile);
+    var userTemp = req.body.profile;
 
     User.find({email:userTemp.email}).count().exec((err, count) => {
 
