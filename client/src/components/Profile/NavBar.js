@@ -13,6 +13,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from "@material-ui/core/Avatar";
 import { createBrowserHistory } from 'history';
+import request from "superagent";
 
 const history=createBrowserHistory();
 const useStyles = makeStyles(theme => ({
@@ -78,9 +79,23 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+    let numberOfNotifications=0;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    function getNotification(){
+        request.get("http://localhost:8000/api/notification")
+            .query({email: localStorage.getItem("email")})
+            .then(res => res.body)
+            .then(res => {
+                numberOfNotifications = res.Flag;
+            });
+    };
+
+    useEffect(()=>{
+        getNotification();
+    },[]);
+
 
     const handleProfileMenuOpen = event => {
         setAnchorEl(event.currentTarget);
@@ -111,7 +126,7 @@ export default function PrimarySearchAppBar() {
             <MenuItem>
                 <IconButton aria-label="show 2 new notifications" color="inherit">
                     {/*TODO:Use the real number of notification*/}
-                    <Badge badgeContent={2} color="secondary">
+                    <Badge badgeContent={numberOfNotifications} color="secondary">
                         <NotificationsIcon />
                     </Badge>
                 </IconButton>
@@ -173,7 +188,7 @@ export default function PrimarySearchAppBar() {
                     <div className={classes.sectionDesktop}>
                         {/*TODO:Use the real number of notification*/}
                         <IconButton aria-label="show 2 new notifications" color="inherit">
-                            <Badge badgeContent={2} color="secondary">
+                            <Badge badgeContent={numberOfNotifications} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
