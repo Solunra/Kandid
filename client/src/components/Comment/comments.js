@@ -12,8 +12,8 @@ import Reply from "./Reply";
 
 const useStyles=makeStyles(theme=>({
     root:{
-        width:400,
-        maxWidth:400,
+        width:800,
+        maxWidth:800,
         backgroundColor: theme.palette.background.paper,
     },
     inline:{
@@ -38,6 +38,10 @@ export default function Comments(props){
     if(temp !== []){
         return(
             <div>
+                <div style={{
+                    height:150,
+                    overflowY:'scroll',
+                }}>
                 <List className={classes.root}>
                     {comments.map(comments=>(
                         <ListItem alignItems={"flex-start"}>
@@ -62,6 +66,7 @@ export default function Comments(props){
                     ))}
                     <Divider variant="inset" component="li"/>
                 </List>
+            </div>
                 <Reply PostID={props.PostId}/>
             </div>
         );
