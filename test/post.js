@@ -39,8 +39,7 @@ describe("Post Tests", () => {
             });
     });
     after("cleanDatabase", done => {
-            mongoose.connection.dropCollection("users");
-            done()
+            mongoose.connection.dropCollection("users").then(done());
         }
     )
 });
