@@ -12,7 +12,7 @@ module.exports = router;
 router.put("/", (req, res) => {
     var userTemp= req.body.profile;
 
-    User.find({email:userTemp.email,password:userTemp.password}).count().exec((err, count) => {
+    User.count({email:userTemp.email,password:userTemp.password}).exec((err, count) => {
         if (count == 0) {
             console.log("Incorrect user or password");
             res.status(201).send("Incorrect user or password");
