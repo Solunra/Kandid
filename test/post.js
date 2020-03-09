@@ -2,6 +2,7 @@ const chaiHttp = require("chai-http");
 const chai = require('chai');
 const expect = chai.expect;
 const app = require('../server');
+const mongoose = require('mongoose');
 
 chai.use(chaiHttp);
 
@@ -39,6 +40,7 @@ describe("Post Tests", () => {
     });
     after("cleanDatabase", done => {
             mongoose.connection.dropCollection("users");
+            done()
         }
     )
 });
