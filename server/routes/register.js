@@ -19,7 +19,6 @@ router.put("/", (req, res) => {
     User.count({email: userTemp.email}).exec((err, count) => {
 
         if (count !== 0) {
-            console.log("Username already exists");
             res.status(201).send("Username already exists");
         }
         else

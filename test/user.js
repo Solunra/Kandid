@@ -6,18 +6,21 @@ const mongoose = require('mongoose');
 
 chai.use(chaiHttp);
 
+const userModel = mongoose.model("User");
+
 describe("User Tests", () => {
     before("createAnAccount", done => {
-        chai.request(app)
-            .get('/api/register/test')
-            .end((err, res) => {
-                done();
-            })
+        const test = new userModel();
+        test.firstname = "Test";
+        test.lastname = "Testing";
+        test.email = "test@testing.com";
+        test.password = "password";
+        test.save().then(done());
     });
     it("getTestAccount", done => {
         chai.request(app)
             .put('/api/login/')
-            .send({profile: {email: "noahf303@gmail.com", password: "password"}})
+            .send({profile: {email: "test@testing.com", password: "password"}})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
@@ -28,7 +31,7 @@ describe("User Tests", () => {
     it("createTestAccount", done => {
         chai.request(app)
             .put('/api/register/')
-            .send({profile: {firstname: "test", lastname: "test", email: "test@test.com", password: "test", confirmPassword: "test"}})
+            .send({profile: {firstname: "test", lastname: "test", email: "donot@change.this", password: "test", confirmPassword: "test"}})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
