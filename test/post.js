@@ -6,6 +6,13 @@ const app = require('../server');
 chai.use(chaiHttp);
 
 describe("Post Tests", () => {
+    before("createAnAccount", done => {
+        chai.request(app)
+            .get('/api/register/test')
+            .end((err, res) => {
+                done();
+            })
+    });
     it("getPostTest", done => {
         chai.request(app)
             .get('/api/post/')
@@ -30,4 +37,8 @@ describe("Post Tests", () => {
                 done();
             });
     });
+    after("cleanDatabase", done => {
+            mongoose.connection.db.dropCollection("users");
+        }
+    )
 });
