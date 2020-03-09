@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const followSchema = new Schema({
-    UserFollowingID: { type: String },
-    UserFollowerID: { type: String }
+    followee: { type: String },
+    follower: { type: String },
+    notificationFlag: { type: Number },
 });
 
 followSchema.methods.hide = function() {

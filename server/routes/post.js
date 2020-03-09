@@ -1,19 +1,19 @@
 const express = require("express");
-const { Post } = require('../database/schemas');
+const { Post, User, Follower } = require('../database/schemas');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+var multer  = require('multer');
+var upload = multer({dest: __dirname + '/images'});
 
 const router = express.Router();
-// parse application/x-www-form-urlencoded
-router.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
-router.use(bodyParser.json());
+
 module.exports = router;
 
 const postModel = mongoose.model("Post");
-const uploadPath = __dirname + "../images/";
 
-router.get("/", (req, res) => {
+const resourceLink = "http://localhost:8000/images/";
+
+const getAll = function(req, res) {
     Post.find().sort('-PostDate').exec((err, post) => {
         if (err) {
             res.status(200).send({message: "There are no posts"});
@@ -21,7 +21,31 @@ router.get("/", (req, res) => {
             res.status(200).send({posts: post});
         }
     });
-});
+};
+
+router.get("/", (req, res) => {
+    User.find({email: req.query.email}).select('UserID').exec((err, userID) => {
+        if (err) {
+            res.status(400).send({message: "No user found"});
+        } else {
+            Follower.find({followee: userID[0].UserID}).exec((err, followed) => {
+                if (err) {
+                    getAll(req, res);
+                } else {
+                    Post.find({userID: {$in: followed}}).sort('-PostDate').exec((err, post) => {
+                        if (err) {
+                            res.status(200).send({message: "There are no posts"});
+                        } else {
+                            res.status(200).send({posts: post});
+                        }
+                    });
+                }
+            });
+        }
+    });
+})
+
+router.get("/all", (req, res) => getAll(req, res));
 
 router.get("/test", (req, res) => {
     const post0 = new postModel;
@@ -33,21 +57,21 @@ router.get("/test", (req, res) => {
     res.send("[Database has obtained a post]")
 });
 
-router.put("/", (req, res) => {
-    var post = new postModel;
+router.post("/", upload.array('image', 1), (req, res) => {
+    const post = new postModel;
+    User.find({email: req.body.UserID}).select('UserID').exec((err, userID) => {
+      if(err) {
+          res.status(400).send({message: "Invalid User"})
+      }
+      else {
+          post.UserID = userID[0].UserID;
+          post.Caption = req.body.Caption;
+          post.Like = 0;
+          let imageFile = req.files[0];
+          post.ImageLink = resourceLink + imageFile.filename;
+          post.save();
+          res.status(200).send("Post successfully posted");
+      }
+    });
 
-    post.UserID = req.user.UserID;
-
-    post.Caption = req.body.post.Caption;
-    post.Like = 0;
-    // var imageFile = req.files.image;
-    // post.ImageLink = uploadPath + imageFile.name;
-    // imageFile.mv(post.ImageLink, (err) => {
-    //    if (err) {
-    //        res.status(500).send(err);
-    //    }
-    // });
-    post.ImageLink=req.body.post.ImageLink;
-    post.save();
-    res.status(200).send("Post successfully posted");
 });

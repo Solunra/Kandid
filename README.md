@@ -22,9 +22,13 @@
  #### Start the service
  In order to start the application, run the following command. <br/>
  ``
-    npm run
- ``
+    npm start
+ ``<br/>
  In order to stop the application, do CTRL + C or CMD + C <br/><br/>
+ In order to run the front-end application, run the following command. <br/>
+ ``
+    npm run client
+ ``<br/><br/>
  In order to test the application, run the following command. <br/>
   ``
     npm test
