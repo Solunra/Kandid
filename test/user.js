@@ -6,13 +6,6 @@ const app = require('../server');
 chai.use(chaiHttp);
 
 describe("User Tests", () => {
-    before("createAnAccount", done => {
-        chai.request(app)
-            .get('/api/register/test')
-            .end((err, res) => {
-                done();
-            })
-    });
     it("getTestAccount", done => {
         chai.request(app)
             .put('/api/login/')

@@ -16,9 +16,9 @@ router.put("/", (req, res) => {
     var user = new userModel;
     var userTemp = req.body.profile;
 
-    User.find({email:userTemp.email}).count().exec((err, count) => {
+    User.count({email: userTemp.email}).exec((err, count) => {
 
-        if (count != 0) {
+        if (count !== 0) {
             console.log("Username already exists");
             res.status(201).send("Username already exists");
         }

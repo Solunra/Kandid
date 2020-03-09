@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
             res.status(400).send({message: "No user found"});
         } else {
             Follower.find({followee: userID[0].UserID}).exec((err, followed) => {
-                if (err) {
+                if (err || followed === []) {
                     getAll(req, res);
                 } else {
                     Post.find({userID: {$in: followed}}).sort('-PostDate').exec((err, post) => {
@@ -43,7 +43,7 @@ router.get("/", (req, res) => {
             });
         }
     });
-})
+});
 
 router.get("/all", (req, res) => getAll(req, res));
 
