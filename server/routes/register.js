@@ -29,8 +29,8 @@ router.put("/", (req, res) => {
                 user.lastname = userTemp.lastname;
                 user.email = userTemp.email;
                 user.password = userTemp.password;
-                user.save();
-                res.status(200).send("Successful SignUp!");
+                user.save()
+                    .then(res.status(200).send("Successful SignUp!"));
             }
             else
             {
