@@ -24,12 +24,12 @@ const getAll = function(req, res) {
 };
 
 router.get("/", (req, res) => {
-    User.find({email: req.query.email}).select('UserID').exec((err, userID) => {
-        if (err) {
+    User.find({email: req.query.email}).select('UserID').exec((err, userRes) => {
+        if (err || userRes === undefined) {
             res.status(400).send({message: "No user found"});
         } else {
-            Follower.find({followee: userID[0].UserID}).exec((err, followed) => {
-                if (err) {
+            Follower.find({followee: userRes.UserID}).exec((err, followed) => {
+                if (err || followed === []) {
                     getAll(req, res);
                 } else {
                     Post.find({userID: {$in: followed}}).sort('-PostDate').exec((err, post) => {
@@ -43,7 +43,7 @@ router.get("/", (req, res) => {
             });
         }
     });
-})
+});
 
 router.get("/all", (req, res) => getAll(req, res));
 
