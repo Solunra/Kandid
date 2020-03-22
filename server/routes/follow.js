@@ -18,6 +18,7 @@ router.put("/", (req, res) => {
   var follow=new followModel;
   follow.followee=req.query.followee;
   follow.follower=req.query.follower;
+  follow.notificationFlag=0;
   console.log(follow);
   follow.save(function(err) {
     if (err) {
@@ -40,6 +41,7 @@ router.get("/test", (req, res) => {
   const follow0 = new followModel;
   follow0.follower = "testFollower";
   follow0.followee = "testFollowee";
+  follow0.notificationFlag=0;
   follow0.save();
   res.send("[Follow has been saved to the Database]");
 });
@@ -47,7 +49,7 @@ router.get("/unfollow", (req, res) => {
   let follower = req.body.follower;
   let followee = req.body.followee;
 
-  follow.remove({ follower: follower, followee: followee }, (err, result) => {
+  Follower.remove({ follower: follower, followee: followee }, (err, result) => {
     if (err) {
       return res.status(404).json({
         success: false,

@@ -8,6 +8,7 @@ const login = require('./login');
 const register = require('./register');
 const user = require('./user');
 const follow = require('./follow');
+const notification = require('./notification');
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.use('/api/login', login);
 router.use('/api/register', register);
 router.use('/api/user', user);
 router.use('/api/follow', follow);
+router.use('/api/notification', notification);
 router.use(cors());
 
 module.exports = router;

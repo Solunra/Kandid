@@ -4,3 +4,8 @@ node_js:
 script:
   - npm install
   - npm test
+services:
+  - mongodb
+cache:
+  directories:
+    - "node_modules"

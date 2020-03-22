@@ -7,11 +7,13 @@
   },
   "scripts": {
     "start": "node server/index.js",
-    "test": "mocha ./test --recursive",
+    "test": "mocha ./test --recursive --exit",
     "client": "scripts/client-script.sh"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "busboy": "^0.3.1",
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
