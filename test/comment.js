@@ -1,6 +1,6 @@
 const chaiHttp = require("chai-http");
 const chai = require('chai');
-const {describe, it, before} = require("mocha");
+const {describe, it, before, after} = require("mocha");
 const expect = chai.expect;
 const app = require('../server');
 
@@ -35,4 +35,9 @@ describe("Comment Tests", () => {
                 done();
             });
     });
+    after("cleanDatabase", done => {
+            mongoose.connection.dropCollection("users");
+            mongoose.connection.dropCollection("comments").then(done());
+        }
+    )
 });
