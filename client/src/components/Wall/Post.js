@@ -3,6 +3,8 @@ import './index.css'
 import request from 'superagent'
 import './image.css'
 import Comment from "../Comment";
+import Reply from "../Comment/Reply";
+import Comments from "../Comment/comments";
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
@@ -31,7 +33,8 @@ export default function Post() {
                             {post.Caption}
                         </div>
                         <div id = "comments">
-                            <Comment PostID = {post.PostID}/>
+                            {/*<Comment PostID = {post.PostID}/>*/}
+                            <Comments PostId={post.PostID}/>
                         </div>
                         {/*TODO: This will be added later on*/}
                         {/*<div id = "like">*/}
