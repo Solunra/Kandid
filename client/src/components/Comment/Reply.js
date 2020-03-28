@@ -3,16 +3,23 @@ import request from 'superagent';
 
 export default class Reply extends React.Component {
     state = {
-        comment: ""
+        comment: "",
+        userEmail: localStorage.getItem("email")
     };
     handleSubmit = (e) => {
         e.preventDefault();
         if (this.state.comment !== "") {
-            request.put("http://localhost:8000/api/comment")
-                .query({PostID: this.props.PostID, Comment: this.state.comment})
-                .then(console.log(this.props.PostID));
+            request.post("http://localhost:8000/api/comment")
+                .send({
+                    email: this.state.userEmail,
+                    PostID: this.props.PostID,
+                    Comment: this.state.comment
+                })
+                .then(res => {
+                    if(res.status === 200) {
+                        window.location.reload(false);                 }
+                });
         }
-        window.location.reload(false)
     };
 
     handleChange = (e) => {

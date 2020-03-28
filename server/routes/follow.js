@@ -1,13 +1,8 @@
 const { Follower } = require("../database/schemas");
 const express = require("express");
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-
 const router = express.Router();
 
-router.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
-router.use(bodyParser.json());
 
 
 module.exports = router;
@@ -19,7 +14,6 @@ router.put("/", (req, res) => {
   follow.followee=req.query.followee;
   follow.follower=req.query.follower;
   follow.notificationFlag=0;
-  console.log(follow);
   follow.save(function(err) {
     if (err) {
       return res.status(404).json({

@@ -1,7 +1,6 @@
 const express = require("express");
 const { User } = require('../database/schemas');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 var multer  = require('multer');
 var upload = multer({dest: __dirname + '/images'});
 

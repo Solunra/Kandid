@@ -24,9 +24,15 @@ export default class SignUp extends Component{
         console.log(json);
         request
             .put("http://localhost:8000/api/register")
-            .send({profile: json})
+            .send({profile: {
+                    firstname: this.state.firstName,
+                    lastname: this.state.lastName,
+                    email: this.state.email,
+                    password: this.state.password,
+                    confirmPassword: this.state.confirmPassword,
+                }})
             .end((err,res) => {
-                if(res.status == 200)
+                if(res.status === 200)
                 {
                     this.setState({toWall:true});
                 }
