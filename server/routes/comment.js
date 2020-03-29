@@ -30,12 +30,12 @@ router.get("/test", (req, res) => {
 
 router.post("/", (req, res) => {
     var comment = new commentModel;
-    User.find({email: req.body.email}).exec((err, result) => {
+    User.find({email: req.body.email}).select('firstname lastname').exec((err, result) => {
         if(err) {
             res.status(400).send({message: "Invalid User"})
         }
         else {
-            comment.UserID = result[0].firstname + " " + result[0].lastname;
+            comment.UserID = (result === undefined ? result[0].firstname + " " + result[0].lastname : "Unknown User");
             comment.PostID = req.body.PostID;
             comment.Comment = req.body.Comment;
             comment.save().then(
