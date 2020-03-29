@@ -31,9 +31,12 @@ export default class Login extends Component {
     console.log(json);
     request
       .put("http://localhost:8000/api/login")
-      .send({ profile: json })
+      .send({ profile: {
+          email: this.state.email,
+          password: this.state.password
+        }})
       .end((err, res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           this.setState({ toWall: true });
         }
       });

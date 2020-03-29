@@ -1,4 +1,4 @@
-const {describe, before, it, after} = require("mocha");
+const {describe, it, after} = require("mocha");
 const chaiHttp = require("chai-http");
 const chai = require('chai');
 const expect = chai.expect;
@@ -6,8 +6,6 @@ const app = require('../server');
 const mongoose = require('mongoose');
 
 chai.use(chaiHttp);
-
-const userModel = mongoose.model("User");
 
 describe("User Tests", () => {
     it("createTestAccount", done => {
