@@ -27,11 +27,15 @@ router.get("/", (req, res) => {
         if (err || userRes === undefined) {
             res.status(400).send({message: "No user found"});
         } else {
-            Follower.find({followee: userRes.UserID}).exec((err, followed) => {
+            Follower.find({follower: userRes[0].UserID}).exec((err, followed) => {
                 if (err || followed === []) {
                     getAll(req, res);
                 } else {
-                    Post.find({userID: {$in: followed}}).sort('-PostDate').exec((err, post) => {
+                    const followID = followed.map(follower => {
+                            return follower.followee;
+                        }
+                    );
+                    Post.find({UserID: {$in: followID}}).sort('-PostDate').exec((err, post) => {
                         if (err) {
                             res.status(200).send({message: "There are no posts"});
                         } else {
@@ -58,12 +62,13 @@ router.get("/test", (req, res) => {
 
 router.post("/", upload.array('image', 1), (req, res) => {
     const post = new postModel;
-    User.find({email: req.body.UserID}).select('firstname lastname').exec((err, result) => {
+    User.find({email: req.body.UserID}).select('firstname lastname UserID').exec((err, result) => {
       if(err) {
           res.status(400).send({message: "Invalid User"})
       }
       else {
-          post.UserID = result[0].firstname + " " + result[0].lastname;
+          post.UserID = result[0].UserID;
+          post.Name = result[0].firstname + " " + result[0].lastname;
           post.Caption = req.body.Caption;
           post.Like = 0;
           let imageFile = req.files[0];
