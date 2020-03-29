@@ -23,7 +23,7 @@ const getAll = function(req, res) {
 };
 
 router.get("/", (req, res) => {
-    /*User.find({email: req.query.email}).select('UserID').exec((err, userRes) => {
+    User.find({email: req.query.email}).select('UserID').exec((err, userRes) => {
         if (err || userRes === undefined) {
             res.status(400).send({message: "No user found"});
         } else {
@@ -41,8 +41,7 @@ router.get("/", (req, res) => {
                 }
             });
         }
-    });*/
-    getAll(req, res);
+    });
 });
 
 router.get("/all", (req, res) => getAll(req, res));
