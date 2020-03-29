@@ -38,9 +38,4 @@ describe("Follow Tests", () => {
                 done();
             });
     });
-
-    after("cleanDatabase", done => {
-            mongoose.connection.dropCollection("users").then(done());
-        }
-    )
 });
