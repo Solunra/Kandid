@@ -3,6 +3,7 @@ const chai = require('chai');
 const {describe, it, before, after} = require("mocha");
 const expect = chai.expect;
 const app = require('../server');
+const mongoose = require('mongoose');
 
 chai.use(chaiHttp);
 
