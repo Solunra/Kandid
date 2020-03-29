@@ -17,6 +17,7 @@ router.put("/", (req, res) => {
       res.status(400).send({message: "Error: No user found"});
     }
     else {
+      console.log(result);
       follow.followee = result[0].UserID;
       User.find({email: req.query.follower}).select('UserID').exec((err, result2) => {
         if (err || result2 === undefined) {
@@ -36,9 +37,6 @@ router.put("/", (req, res) => {
       });
     }
   });
-
-  console.log(follow);
-
 });
 router.get("/test", (req, res) => {
   const follow0 = new followModel;
