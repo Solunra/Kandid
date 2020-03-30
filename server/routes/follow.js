@@ -1,4 +1,4 @@
-const { Follower } = require("../database/schemas");
+const { Follower, User } = require("../database/schemas");
 const express = require("express");
 const mongoose = require('mongoose');
 const router = express.Router();
@@ -11,24 +11,30 @@ const followModel = mongoose.model("Follower");
 
 router.put("/", (req, res) => {
   var follow=new followModel;
-  follow.followee=req.query.followee;
-  follow.follower=req.query.follower;
   follow.notificationFlag=0;
-  follow.save(function(err) {
-    if (err) {
-      return res.status(404).json({
-        success: false,
-        status: 404,
-        data: {},
-        message: "There was an error trying to follow the user."
+  User.find({email: req.query.followee}).select('UserID').exec((err, result) => {
+    if(err || result === undefined ) {
+      res.status(400).send({message: "Error: No user found"});
+    }
+    else {
+      follow.followee = result[0].UserID;
+      User.find({email: req.query.follower}).select('UserID').exec((err, result2) => {
+        if (err || result2 === undefined) {
+          res.status(400).send({message: "Error: No user found"});
+        }
+        else {
+          follow.follower = result2[0].UserID;
+          follow.save(function(err) {
+            if (err) {
+              res.status(400).send({success: false, data: {}, message: "There was an error trying to follow the user."});
+            }
+            else {
+              res.status(200).send({success: true, data: follow, message: "Successfully followed user"});
+            }
+          });
+        }
       });
     }
-    return res.status(200).json({
-      success: true,
-      status: 200,
-      data: follow,
-      message: "Successfully followed user"
-    });
   });
 });
 router.get("/test", (req, res) => {
@@ -42,7 +48,7 @@ router.get("/test", (req, res) => {
 router.get("/unfollow", (req, res) => {
   let follower = req.body.follower;
   let followee = req.body.followee;
-
+  //TODO: update this when unfollow option has been added onto the front end
   Follower.remove({ follower: follower, followee: followee }, (err, result) => {
     if (err) {
       return res.status(404).json({

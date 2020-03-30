@@ -24,10 +24,10 @@ export default function Post() {
                 return(
                     <div id="post" style={{alignContent: 'center'}}>
                         <div id = "user">
-                            User: {post.UserID}
+                            User: {post.Name}
                         </div>
                         <div id = "image">
-                            <img src={post.ImageLink}/>
+                            <img src={post.ImageLink} alt={"Error 400: Image not found"}/>
                         </div>
                         <div id = "caption">
                             {post.Caption}
