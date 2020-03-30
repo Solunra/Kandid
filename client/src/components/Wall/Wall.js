@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import NavBar from "./NavBar";
 import './index.css'
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';

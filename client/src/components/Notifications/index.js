@@ -1,3 +1,3 @@
-import Notification from "./notification.js";
+import Notification from "./Notification.js";
 
 export {Notification};

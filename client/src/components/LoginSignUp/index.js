@@ -1,4 +1,4 @@
-import Login from "./login.component.js";
-import SignUp from "./signup.component.js";
+import Login from "./Login.js";
+import SignUp from "./Signup.js";
 
 export {Login,SignUp};

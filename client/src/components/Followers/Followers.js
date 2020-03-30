@@ -44,7 +44,7 @@ export default function Followers(){
         request.put('http://localhost:8000/api/follow')
             .query({follower:user,followee:followee})
             .end((err,res)=>{
-            if (res.status== 200){
+            if (res.status=== 200){
                 console.log(res.status);
             }
         });
