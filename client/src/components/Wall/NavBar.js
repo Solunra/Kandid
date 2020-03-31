@@ -13,6 +13,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from "@material-ui/core/Avatar";
 import { createBrowserHistory } from 'history';
+import request from "superagent";
 
 const history=createBrowserHistory();
 const useStyles = makeStyles(theme => ({
@@ -132,15 +133,24 @@ export default function PrimarySearchAppBar() {
         </Menu>
     );
 
-    function RedirectToWall(e){
+    function redirectToWall(e){
         console.log("Redirecting");
         history.push('/wall');
         window.location.reload(false);
     }
     function searchUsers(){
+        let email = document.getElementById("email").value;
+        localStorage.setItem("searchEmail", email);
         history.push('/users');
         window.location.reload(false);
+
     }
+function enterKeyPress(e) {
+    if(e.keyCode == 13){
+        searchUsers();
+
+    }
+}
     return (
         <div className={classes.grow}>
             <AppBar position="static" color="white">
@@ -152,21 +162,21 @@ export default function PrimarySearchAppBar() {
                         aria-label="open drawer"
                     >
                     </IconButton>
-                    <Typography className={classes.title} variant="h4" noWrap onClick={RedirectToWall}>
+                    <Typography className={classes.title} variant="h4" noWrap onClick={redirectToWall}>
                         Kandid
                     </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
+                    <div className={classes.search} onKeyDown={enterKeyPress}>
+                      <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
-                        <InputBase
+                        <InputBase id={"email"}
                             placeholder="Search…"
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
-                            onClick={searchUsers}
+
                         />
                     </div>
                     <div className={classes.grow} />

@@ -10,11 +10,28 @@ const router = express.Router();
 module.exports = router;
 
 router.get("/", (req, res) => {
-    User.find().exec((err, user) => {
-        if (err) {
-            res.status(201).send({message: "There are no posts"});
-        } else {
-            res.status(200).send({users: user});
+
+    if (req.query.email==="")
+    {
+        User.find().exec((err, user) => {
+            if (err) {
+                res.status(201).send({message: "There are currently no users"});
+            } else {
+                res.status(200).send({users: user});
+            }
+        });
+    }
+
+    else
+        {
+            User.find({'email': req.query.email}).exec((err, user) => {
+                if (err) {
+                    res.status(201).send({message: "No user with that email exists"});
+                } else {
+                    res.status(200).send({users: user});
+                }
+            });
         }
-    });
+
 });
+

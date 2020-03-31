@@ -35,10 +35,14 @@ export default function Followers(){
     useEffect(()=>{
         //TODO:request all the users in the database
         request.get('http://localhost:8000/api/user')
+            .query({email: localStorage.getItem("searchEmail")})
             .then(res => res.body.users)
             .then(data => {
-                setUsers(data);
-    })},[]);
+                setUsers(data)})
+
+            ;},[]);
+
+
     function Follow(user,e){
         e.preventDefault();
         console.log(`${followee} is Following ${user}`);
@@ -54,26 +58,29 @@ export default function Followers(){
         });
     }
     return(
+
       <div className={classes.root}>
+
           <GridList className={classes.gridList} cellHeight={200} spacing={1} cols={1}>
-              {users.map(user =>(
-                  <GridListTile key={images}>
-                      <img src={images} alt="image not shown"/>
-                    <GridListTileBar
-                        title={user.email}
-                        classes={{
-                            root:classes.titleBar,
-                            title:classes.title,
-                        }}
-                        actionIcon={
-                            <IconButton aria-label={`star ${user.email}`} onClick={e=>Follow(user.email,e)}>
-                                <PersonAddOutlinedIcon className={classes.title}/>
-                            </IconButton>
-                        }
-                    />
-                  </GridListTile>
-              ))}
-          </GridList>
-      </div>
-    );
+    {users.map(user =>(
+            <GridListTile key={images}>
+                <img src={images} alt="image not shown"/>
+                <GridListTileBar
+                    title={user.email}
+                    classes={{
+                        root:classes.titleBar,
+                        title:classes.title,
+                    }}
+
+                    actionIcon={
+                        <IconButton aria-label={`star ${user.email}`} onClick={e=>Follow(user.email,e)}>
+                            <PersonAddOutlinedIcon className={classes.title}/>
+                        </IconButton>
+                    }
+                />
+            </GridListTile>
+        ))}
+</GridList>
+</div>
+);
 }
