@@ -11,7 +11,7 @@ describe("Comment Tests", () => {
     before("createAnAccount", done => {
         chai.request(app)
             .put('/api/register/')
-            .send({profile: {firstname: "test", lastname: "test", email: "donot@change.this", password: "test", confirmPassword: "test"}})
+            .send({profile: {firstname: "test", lastname: "test", email: "donot2@change.this", password: "test", confirmPassword: "test"}})
             .then(done());
     });
     it("getCommentTest", done => {
@@ -29,7 +29,7 @@ describe("Comment Tests", () => {
     it("postCommentTest", done => {
         chai.request(app)
             .post('/api/comment/')
-            .send({email: "donot@change.this", PostID: "1", Comment: "this"})
+            .send({email: "donot2@change.this", PostID: "1", Comment: "this"})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
