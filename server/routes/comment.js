@@ -35,9 +35,7 @@ router.post("/", (req, res) => {
             res.status(400).send({message: "Invalid User"})
         }
         else {
-            console.log(result);
-            console.log(result!==[]);
-            comment.UserID = ((result !== []) ? (result[0].firstname + " " + result[0].lastname) : ("Unknown User"));
+            comment.UserID = ((result.length !== 0) ? (result[0].firstname + " " + result[0].lastname) : ("Unknown User"));
             comment.PostID = req.body.PostID;
             comment.Comment = req.body.Comment;
             comment.save().then(
