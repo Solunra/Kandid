@@ -30,7 +30,6 @@ export default function Comments(props){
             .query({PostID: props.PostId})
             .then(res => res.body.comments)
             .then(res => {
-                // this.setState({comments: res.comments})
                 setComments(res);
                 console.log(comments);
                 console.log(props.PostId);

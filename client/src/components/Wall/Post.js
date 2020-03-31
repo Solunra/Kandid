@@ -4,7 +4,7 @@ import request from 'superagent'
 import './image.css'
 import Comment from "../Comment";
 import Reply from "../Comment/Reply";
-import Comments from "../Comment/comments";
+import Comments from "../Comment/Comments";
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
