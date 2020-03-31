@@ -6,14 +6,17 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from "@material-ui/core/Avatar";
 import { createBrowserHistory } from 'history';
 import request from "superagent";
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import {withStyles} from "@material-ui/core/styles";
+
 
 const history=createBrowserHistory();
 const useStyles = makeStyles(theme => ({
@@ -73,6 +76,7 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
+
 }));
 
 export default function PrimarySearchAppBar() {
@@ -80,28 +84,25 @@ export default function PrimarySearchAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const [notification,setNotification]=React.useState([]);
 
 
     useEffect(()=>{
         request.put("http://localhost:8000/api/notification")
             .query({email: localStorage.getItem("email")})
-            .end((err,res) =>{
-                if(res.status==222){
-                    console.log("notification set");
-                   setNumberOfNotifications(1);
-                }
+            .then(res => res.body.notifications)
+            .then(data => {
+                setNotification(data);
+                setNumberOfNotifications(data.length);
             });
     },[]);
 
     function removeNotification(e){
-        e.preventDefault();
         setNumberOfNotifications(0);
         request.put("http://localhost:8000/api/notification/remove")
             .query({email: localStorage.getItem("email")})
             .end((err,res) => {
-                if (res.status == 224) {
+                if (res.status == 200) {
                     console.log("removed notification");
                 }
             });
@@ -113,11 +114,6 @@ export default function PrimarySearchAppBar() {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-
     const handleMobileMenuOpen = event => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
@@ -125,39 +121,6 @@ export default function PrimarySearchAppBar() {
     const menuId = 'primary-search-account-menu';
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
-    // const renderMobileMenu = (
-    //     <Menu
-    //         anchorEl={mobileMoreAnchorEl}
-    //         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-    //         id={mobileMenuId}
-    //         keepMounted
-    //         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-    //         open={isMobileMenuOpen}
-    //         onClose={handleMobileMenuClose}
-    //     >
-    //         <MenuItem>
-    //             <IconButton aria-label="show 2 new notifications" color="inherit" onClick={console.log("PP")}>
-    //                 {/*TODO:Use the real number of notification*/}
-    //                 <Badge badgeContent={numberOfNotifications} color="secondary">
-    //                     <NotificationsIcon />
-    //                 </Badge>
-    //             </IconButton>
-    //             <p>Notifications</p>
-    //         </MenuItem>
-    //         <MenuItem onClick={handleProfileMenuOpen}>
-    //             <IconButton
-    //                 aria-label="account of current user"
-    //                 aria-controls="primary-search-account-menu"
-    //                 aria-haspopup="true"
-    //                 color="inherit"
-    //             >
-    //                 {/*TODO: Use Picture for avatar */}
-    //                 <Avatar className={classes.orange}>N</Avatar>
-    //             </IconButton>
-    //             <p>Profile</p>
-    //         </MenuItem>
-    //     </Menu>
-    // );
 
     function RedirectToWall(e){
         console.log("Redirecting");
@@ -168,6 +131,39 @@ export default function PrimarySearchAppBar() {
         history.push('/users');
         window.location.reload(false);
     }
+
+    const ITEM_HEIGHT = 48;
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        removeNotification()
+    };
+
+    const StyledMenu = withStyles({
+        paper: {
+            border: '1px solid #d3d4d5',
+        },
+    })((props) => (
+        <Menu
+            elevation={10}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            {...props}
+        />
+    ));
+
     return (
         <div className={classes.grow}>
             <AppBar position="static" color="white">
@@ -197,24 +193,54 @@ export default function PrimarySearchAppBar() {
                         />
                     </div>
                     <div className={classes.grow} />
+
                     <div className={classes.sectionDesktop}>
-                        {/*TODO:Use the real number of notification*/}
                         <IconButton aria-label="show 2 new notifications" color="inherit" >
-                            <Badge badgeContent={numberOfNotifications} color="secondary" n>
-                                <NotificationsIcon onClick={removeNotification}/>
+                            <Badge badgeContent={numberOfNotifications} color="secondary">
+                                <NotificationsIcon onClick={handleClick}/>
                             </Badge>
                         </IconButton>
+                        <StyledMenu
+                            id="long-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={open}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+
+                            PaperProps={{
+                                style: {
+                                    maxHeight: ITEM_HEIGHT * 4.5,
+                                    maxWidth: '50ch',
+                                },
+                            }}
+                        >
+                            {notification.map(option => {
+                                return(
+                                    <MenuItem key={option} onClick={handleClose}>
+                                        {option.Message}
+                                    </MenuItem>
+                                )})}
+                        </StyledMenu>
+
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
                             aria-controls={menuId}
                             aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
                             <Avatar className={classes.orange}>N</Avatar>
                         </IconButton>
                     </div>
+
                     <div className={classes.sectionMobile}>
                         <IconButton
                             aria-label="show more"
@@ -228,7 +254,6 @@ export default function PrimarySearchAppBar() {
                     </div>
                 </Toolbar>
             </AppBar>
-            {/*{renderMobileMenu}*/}
         </div>
     );
 }
