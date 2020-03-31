@@ -39,7 +39,7 @@ router.get("/test", (req, res) => {
     user0.email = "noahf303@gmail.com";
     user0.password = "password";
     user0.save();
-    res.status.send("[Database has obtained a user]")
+    res.status(200).send("[Database has obtained a user]")
 });
 
 
