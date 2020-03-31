@@ -23,10 +23,12 @@ const getAll = function(req, res) {
 };
 
 router.get("/", (req, res) => {
-    User.find({email: req.query.email}).select('UserID').exec((err, userRes) => {
-        if (err || userRes === undefined) {
+    User.find({email: req.query.email}).exec((err, userRes) => {
+        if (err || userRes === []) {
             res.status(400).send({message: "No user found"});
-        } else {
+        }
+        else {
+            console.log(userRes);
             Follower.find({follower: userRes[0].UserID}).exec((err, followed) => {
                 if (err || followed === []) {
                     getAll(req, res);
