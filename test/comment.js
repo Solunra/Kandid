@@ -8,6 +8,11 @@ const mongoose = require('mongoose');
 chai.use(chaiHttp);
 
 describe("Comment Tests", () => {
+    before("createAnAccount", done => {
+        chai.request(app)
+            .put('/api/register/test')
+            .then(done());
+    });
     it("getCommentTest", done => {
         chai.request(app)
             .get('/api/comment/')
