@@ -37,8 +37,7 @@ describe("Comment Tests", () => {
             });
     });
     after("cleanDatabase", done => {
-            mongoose.connection.dropCollection("users");
-            mongoose.connection.dropCollection("comments").then(done());
+            mongoose.connection.dropCollection("users").then(done());
         }
     )
 });
