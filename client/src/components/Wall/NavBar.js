@@ -82,7 +82,6 @@ export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
     const [notification,setNotification]=React.useState([]);
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
 
     useEffect(()=>{
