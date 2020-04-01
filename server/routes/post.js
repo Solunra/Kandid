@@ -28,7 +28,6 @@ router.get("/", (req, res) => {
             res.status(400).send({message: "No user found"});
         }
         else {
-            console.log(userRes);
             Follower.find({follower: userRes[0].UserID}).exec((err, followed) => {
                 if (err || followed.length === 0) {
                     getAll(req, res);
