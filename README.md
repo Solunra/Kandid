@@ -41,3 +41,10 @@
   * Tigran Karapetyan (Tigrankar)
   * Ashwin Philip (Ashphil30)
   * Noah Freger (noahfreger)
+ 
+ ####JSHint with Markdown Reporter
+    The following reporter was used: https://github.com/justinchmura/jshint-md-reporter
+    Use the following command to run the md report for the backend
+        jshint --reporter node_modules/jshint-md-reporter/lib/reporter.js server/ > report.md
+    
+    It will generate a report in markdown style as a file on the root directory as report.md
