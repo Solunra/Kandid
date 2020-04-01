@@ -24,13 +24,13 @@ const getAll = function(req, res) {
 
 router.get("/", (req, res) => {
     User.find({email: req.query.email}).exec((err, userRes) => {
-        if (err || userRes === []) {
+        if (err || userRes.length === 0) {
             res.status(400).send({message: "No user found"});
         }
         else {
             console.log(userRes);
             Follower.find({follower: userRes[0].UserID}).exec((err, followed) => {
-                if (err || followed === []) {
+                if (err || followed.length === 0) {
                     getAll(req, res);
                 } else {
                     const followID = followed.map(follower => {
