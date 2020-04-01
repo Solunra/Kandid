@@ -28,31 +28,24 @@ const useStyles =makeStyles(theme=>({
     },
 }));
 const images="http://localhost:8000/images/3b240f807c2dae99d87edb13c4536e73";
-const followee=localStorage.getItem("email");
+const user=localStorage.getItem("email");
 export default function Followers(){
     const classes=useStyles();
     const [users,setUsers] = useState([]);
     useEffect(()=>{
-        //TODO:request all the users in the database
         request.get('http://localhost:8000/api/user')
             .query({email: localStorage.getItem("searchEmail")})
             .then(res => res.body.users)
             .then(data => {
-                setUsers(data)})
-
-            ;},[]);
-
-
-    function Follow(user,e){
+                setUsers(data);
+    })},[]);
+    function Follow(followee,e){
         e.preventDefault();
-        console.log(`${followee} is Following ${user}`);
-        const jsonString=`follower:${user},followee:${followee}`;
-        const json=JSON.stringify(jsonString);
-        console.log(json);
+        console.log(`${user} is Following ${followee}`);
         request.put('http://localhost:8000/api/follow')
             .query({follower:user,followee:followee})
             .end((err,res)=>{
-            if (res.status== 200){
+            if (res.status=== 200){
                 console.log(res.status);
             }
         });

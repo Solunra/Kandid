@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node server/index.js",
     "test": "mocha ./test --recursive --exit",
-    "client": "scripts/client-script.sh"
+    "client": "bash ./scripts/client-script.sh"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

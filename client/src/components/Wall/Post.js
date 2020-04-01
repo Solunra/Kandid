@@ -3,6 +3,8 @@ import './index.css'
 import request from 'superagent'
 import './image.css'
 import Comment from "../Comment";
+import Reply from "../Comment/Reply";
+import Comments from "../Comment/Comments";
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
@@ -22,16 +24,17 @@ export default function Post() {
                 return(
                     <div id="post" style={{alignContent: 'center'}}>
                         <div id = "user">
-                            User: {post.UserID}
+                            User: {post.Name}
                         </div>
                         <div id = "image">
-                            <img src={post.ImageLink}/>
+                            <img src={post.ImageLink} alt={"Error 400: Image not found"}/>
                         </div>
                         <div id = "caption">
                             {post.Caption}
                         </div>
                         <div id = "comments">
-                            <Comment PostID = {post.PostID}/>
+                            {/*<Comment PostID = {post.PostID}/>*/}
+                            <Comments PostId={post.PostID}/>
                         </div>
                         {/*TODO: This will be added later on*/}
                         {/*<div id = "like">*/}

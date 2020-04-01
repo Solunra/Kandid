@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,8 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -77,61 +75,36 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrimarySearchAppBar() {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const handleProfileMenuOpen = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
+    const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
 
 
-    const handleMobileMenuOpen = event => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
+    useEffect(()=>{
+        request.put("http://localhost:8000/api/notification")
+            .query({email: localStorage.getItem("email")})
+            .end((err,res) =>{
+                if(res.status===222){
+                    console.log("notification set");
+                   setNumberOfNotifications(1);
+                }
+            });
+    },[]);
+
+    function removeNotification(e){
+        e.preventDefault();
+        setNumberOfNotifications(0);
+        request.put("http://localhost:8000/api/notification/remove")
+            .query({email: localStorage.getItem("email")})
+            .end((err,res) => {
+                if (res.status === 224) {
+                    console.log("removed notification");
+                }
+            });
+        window.location.reload(false);
+    }
 
     const menuId = 'primary-search-account-menu';
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton aria-label="show 2 new notifications" color="inherit">
-                    {/*TODO:Use the real number of notification*/}
-                    <Badge badgeContent={2} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    {/*TODO: Use Picture for avatar */}
-                    <Avatar className={classes.orange}>N</Avatar>
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
-        </Menu>
-    );
 
     function redirectToWall(e){
         console.log("Redirecting");
@@ -182,9 +155,9 @@ function enterKeyPress(e) {
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         {/*TODO:Use the real number of notification*/}
-                        <IconButton aria-label="show 2 new notifications" color="inherit">
-                            <Badge badgeContent={2} color="secondary">
-                                <NotificationsIcon />
+                        <IconButton aria-label="show 2 new notifications" color="inherit" >
+                            <Badge badgeContent={numberOfNotifications} color="secondary" n>
+                                <NotificationsIcon onClick={removeNotification}/>
                             </Badge>
                         </IconButton>
                         <IconButton
@@ -192,7 +165,6 @@ function enterKeyPress(e) {
                             aria-label="account of current user"
                             aria-controls={menuId}
                             aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
                             <Avatar className={classes.orange}>N</Avatar>
@@ -203,7 +175,6 @@ function enterKeyPress(e) {
                             aria-label="show more"
                             aria-controls={mobileMenuId}
                             aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
                             color="inherit"
                         >
                             <MoreIcon />
@@ -211,7 +182,6 @@ function enterKeyPress(e) {
                     </div>
                 </Toolbar>
             </AppBar>
-            {renderMobileMenu}
         </div>
     );
 }
