@@ -10,8 +10,7 @@ chai.use(chaiHttp);
 describe("Comment Tests", () => {
     before("createAnAccount", done => {
         chai.request(app)
-            .put('/api/register/')
-            .send({profile: {firstname: "test", lastname: "test", email: "donot@change.this", password: "test", confirmPassword: "test"}})
+            .put('/api/register/test')
             .then(done());
     });
     it("getCommentTest", done => {
@@ -29,7 +28,7 @@ describe("Comment Tests", () => {
     it("postCommentTest", done => {
         chai.request(app)
             .post('/api/comment/')
-            .send({email: "donot@change.this", PostID: "1", Comment: "this"})
+            .send({email: "noahf303@gmail.com", PostID: "1", Comment: "this"})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res).to.have.status(200);
@@ -37,8 +36,7 @@ describe("Comment Tests", () => {
             });
     });
     after("cleanDatabase", done => {
-            mongoose.connection.dropCollection("users");
-            mongoose.connection.dropCollection("comments").then(done());
+            mongoose.connection.dropCollection("users").then(done());
         }
     )
 });
