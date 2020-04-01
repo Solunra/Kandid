@@ -112,9 +112,18 @@ export default function PrimarySearchAppBar() {
         window.location.reload(false);
     }
     function searchUsers(){
+        let email = document.getElementById("email").value;
+        localStorage.setItem("searchEmail", email);
         history.push('/users');
         window.location.reload(false);
+
     }
+function enterKeyPress(e) {
+    if(e.keyCode == 13){
+        searchUsers();
+
+    }
+}
     return (
         <div className={classes.grow}>
             <AppBar position="static" color="white">
@@ -129,18 +138,18 @@ export default function PrimarySearchAppBar() {
                     <Typography className={classes.title} variant="h4" noWrap onClick={redirectToWall}>
                         Kandid
                     </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
+                    <div className={classes.search} onKeyDown={enterKeyPress}>
+                      <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
-                        <InputBase
+                        <InputBase id={"email"}
                             placeholder="Search…"
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
-                            onClick={searchUsers}
+
                         />
                     </div>
                     <div className={classes.grow} />
