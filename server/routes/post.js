@@ -1,5 +1,5 @@
 const express = require("express");
-const { Post, User, Follower } = require('../database/schemas');
+const { Post, User, Follower, Notifications } = require('../database/schemas');
 const mongoose = require('mongoose');
 var multer  = require('multer');
 var upload = multer({dest: __dirname + '/images'});
@@ -9,6 +9,7 @@ const router = express.Router();
 module.exports = router;
 
 const postModel = mongoose.model("Post");
+const notificationsModel = mongoose.model("Notifications");         ///new
 
 const resourceLink = "http://localhost:8000/images/";
 
@@ -67,6 +68,24 @@ router.post("/", upload.array('image', 1), (req, res) => {
           res.status(400).send({message: "Invalid User"})
       }
       else {
+    ////---- For Notifications
+          Follower.find({followee: req.body.UserID}).exec((err, followers) => {
+          if(err){
+          }
+          else{
+              for(let i=0;i<followers.length;i++){
+                  const notification = new notificationsModel;
+                  notification.Recipient_Email = followers[i].follower;
+                  notification.Actor_Email = req.body.UserID;
+                  notification.Message=req.body.UserID+" posted a picture.";
+                  notification.Read_At = 1;
+                  notification.save()
+              }
+          }
+          });
+    ////---- For Notifications
+
+          post.UserID = result[0].firstname + " " + result[0].lastname;
           post.UserID = result[0].UserID;
           post.Name = result[0].firstname + " " + result[0].lastname;
           post.Caption = req.body.Caption;
@@ -78,5 +97,4 @@ router.post("/", upload.array('image', 1), (req, res) => {
           );
       }
     });
-
 });

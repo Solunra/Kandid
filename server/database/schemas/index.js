@@ -3,6 +3,7 @@ const Comment = require('./Comment');
 const Follower = require('./Follower');
 const Like = require('./Like');
 const Post = require('./Post');
+const Notifications = require('./Notifications');
 
 
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
     Comment,
     Follower,
     Like,
-    Post
+    Post,
+    Notifications
 };

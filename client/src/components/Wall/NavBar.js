@@ -13,6 +13,11 @@ import Avatar from "@material-ui/core/Avatar";
 import { createBrowserHistory } from 'history';
 import request from "superagent";
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import {withStyles} from "@material-ui/core/styles";
+
+
 const history=createBrowserHistory();
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -76,26 +81,25 @@ const useStyles = makeStyles(theme => ({
 export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
+    const [notification,setNotification]=React.useState([]);
 
 
     useEffect(()=>{
         request.put("http://localhost:8000/api/notification")
             .query({email: localStorage.getItem("email")})
-            .end((err,res) =>{
-                if(res.status===222){
-                    console.log("notification set");
-                   setNumberOfNotifications(1);
-                }
+            .then(res => res.body.notifications)
+            .then(data => {
+                setNotification(data);
+                setNumberOfNotifications(data.length);
             });
     },[]);
 
     function removeNotification(e){
-        e.preventDefault();
         setNumberOfNotifications(0);
         request.put("http://localhost:8000/api/notification/remove")
             .query({email: localStorage.getItem("email")})
             .end((err,res) => {
-                if (res.status === 224) {
+                if (res.status == 200) {
                     console.log("removed notification");
                 }
             });
@@ -116,8 +120,40 @@ export default function PrimarySearchAppBar() {
         localStorage.setItem("searchEmail", email);
         history.push('/users');
         window.location.reload(false);
-
     }
+
+    const ITEM_HEIGHT = 48;
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        removeNotification()
+    };
+
+    const StyledMenu = withStyles({
+        paper: {
+            border: '1px solid #d3d4d5',
+        },
+    })((props) => (
+        <Menu
+            elevation={10}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            {...props}
+        />
+    ));
+
 function enterKeyPress(e) {
     if(e.keyCode == 13){
         searchUsers();
@@ -154,12 +190,41 @@ function enterKeyPress(e) {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        {/*TODO:Use the real number of notification*/}
                         <IconButton aria-label="show 2 new notifications" color="inherit" >
-                            <Badge badgeContent={numberOfNotifications} color="secondary" n>
-                                <NotificationsIcon onClick={removeNotification}/>
+                            <Badge badgeContent={numberOfNotifications} color="secondary">
+                                <NotificationsIcon onClick={handleClick}/>
                             </Badge>
                         </IconButton>
+                        <StyledMenu
+                            id="long-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={open}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'center',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'center',
+                            }}
+
+                            PaperProps={{
+                                style: {
+                                    maxHeight: ITEM_HEIGHT * 4.5,
+                                    maxWidth: '50ch',
+                                },
+                            }}
+                        >
+                            {notification.map(option => {
+                                return(
+                                    <MenuItem key={option} onClick={handleClose}>
+                                        {option.Message}
+                                    </MenuItem>
+                                )})}
+                        </StyledMenu>
+
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
@@ -170,6 +235,7 @@ function enterKeyPress(e) {
                             <Avatar className={classes.orange}>N</Avatar>
                         </IconButton>
                     </div>
+
                     <div className={classes.sectionMobile}>
                         <IconButton
                             aria-label="show more"
