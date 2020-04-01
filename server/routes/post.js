@@ -61,11 +61,9 @@ router.get("/test", (req, res) => {
     res.send("[Database has obtained a post]")
 });
 
-
 router.post("/", upload.array('image', 1), (req, res) => {
     const post = new postModel;
-
-    User.find({email: req.body.UserID}).select('firstname lastname').exec((err, result) => {
+    User.find({email: req.body.UserID}).select('firstname lastname UserID').exec((err, result) => {
       if(err) {
           res.status(400).send({message: "Invalid User"})
       }
@@ -76,7 +74,7 @@ router.post("/", upload.array('image', 1), (req, res) => {
           }
           else{
               for(let i=0;i<followers.length;i++){
-                  const notification = new notificationsModel;    ///new
+                  const notification = new notificationsModel;
                   notification.Recipient_Email = followers[i].follower;
                   notification.Actor_Email = req.body.UserID;
                   notification.Message=req.body.UserID+" posted a picture.";
@@ -88,6 +86,8 @@ router.post("/", upload.array('image', 1), (req, res) => {
     ////---- For Notifications
 
           post.UserID = result[0].firstname + " " + result[0].lastname;
+          post.UserID = result[0].UserID;
+          post.Name = result[0].firstname + " " + result[0].lastname;
           post.Caption = req.body.Caption;
           post.Like = 0;
           let imageFile = req.files[0];

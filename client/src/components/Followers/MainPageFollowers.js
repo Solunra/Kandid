@@ -1,11 +1,7 @@
 import React,{Component} from 'react';
-import Followers from "./followers.component";
+import Followers from "./Followers";
 import NavBar from "../Wall/NavBar.js"
 export default class mainPageFollowers extends Component{
-    constructor(props) {
-        super(props);
-
-    }
 
     render() {
         return(

@@ -1,2 +1,2 @@
-import Wall from "./wall.component";
+import Wall from "./Wall";
 export {Wall};

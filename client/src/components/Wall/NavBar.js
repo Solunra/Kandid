@@ -76,13 +76,10 @@ const useStyles = makeStyles(theme => ({
             display: 'none',
         },
     },
-
 }));
 
 export default function PrimarySearchAppBar() {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
     const [notification,setNotification]=React.useState([]);
 
@@ -109,25 +106,18 @@ export default function PrimarySearchAppBar() {
         window.location.reload(false);
     }
 
-
-    const handleProfileMenuOpen = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuOpen = event => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
     const menuId = 'primary-search-account-menu';
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
 
-    function RedirectToWall(e){
+    function redirectToWall(e){
         console.log("Redirecting");
         history.push('/wall');
         window.location.reload(false);
     }
     function searchUsers(){
+        let email = document.getElementById("email").value;
+        localStorage.setItem("searchEmail", email);
         history.push('/users');
         window.location.reload(false);
     }
@@ -164,6 +154,12 @@ export default function PrimarySearchAppBar() {
         />
     ));
 
+function enterKeyPress(e) {
+    if(e.keyCode == 13){
+        searchUsers();
+
+    }
+}
     return (
         <div className={classes.grow}>
             <AppBar position="static" color="white">
@@ -175,25 +171,24 @@ export default function PrimarySearchAppBar() {
                         aria-label="open drawer"
                     >
                     </IconButton>
-                    <Typography className={classes.title} variant="h4" noWrap onClick={RedirectToWall}>
+                    <Typography className={classes.title} variant="h4" noWrap onClick={redirectToWall}>
                         Kandid
                     </Typography>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
+                    <div className={classes.search} onKeyDown={enterKeyPress}>
+                      <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
-                        <InputBase
+                        <InputBase id={"email"}
                             placeholder="Search…"
                             classes={{
                                 root: classes.inputRoot,
                                 input: classes.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
-                            onClick={searchUsers}
+
                         />
                     </div>
                     <div className={classes.grow} />
-
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 2 new notifications" color="inherit" >
                             <Badge badgeContent={numberOfNotifications} color="secondary">
@@ -246,7 +241,6 @@ export default function PrimarySearchAppBar() {
                             aria-label="show more"
                             aria-controls={mobileMenuId}
                             aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
                             color="inherit"
                         >
                             <MoreIcon />
