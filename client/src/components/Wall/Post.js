@@ -5,6 +5,8 @@ import './image.css'
 import Comment from "../Comment";
 import Reply from "../Comment/Reply";
 import Comments from "../Comment/Comments";
+import Likes from "./Likes";
+
 
 export default function Post() {
     const [posts, setPosts] = useState([]);
@@ -31,6 +33,9 @@ export default function Post() {
                         </div>
                         <div id = "caption">
                             {post.Caption}
+                        </div>
+                        <div id = "like">
+                            <Likes PostID={post.PostID}/>
                         </div>
                         <div id = "comments">
                             {/*<Comment PostID = {post.PostID}/>*/}

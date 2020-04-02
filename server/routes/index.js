@@ -9,9 +9,11 @@ const register = require('./register');
 const user = require('./user');
 const follow = require('./follow');
 const notification = require('./notification');
+const likes =require('./likes');
 
 const router = express.Router();
 
+router.use('/api/likes', likes);
 router.use('/api/post', post);
 router.use('/api/comment', comment);
 router.use('/api/login', login);
