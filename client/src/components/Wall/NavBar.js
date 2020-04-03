@@ -20,6 +20,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from "@material-ui/core/styles";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import {Redirect} from "react-router-dom";
 
 
 const history=createBrowserHistory();
@@ -145,7 +146,7 @@ export default function PrimarySearchAppBar() {
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
     const [notification,setNotification]=React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [noah, setNoah] = React.useState(null);
+    const [anchorEl2, setAnchorEl2] = React.useState(null);
 
 
     useEffect(()=>{
@@ -178,6 +179,14 @@ export default function PrimarySearchAppBar() {
         history.push('/wall');
         window.location.reload(false);
     }
+
+    function redirectToLogin(){
+        history.replace("/login","/wall");
+        localStorage.setItem("email", "");
+        window.location.reload(false);
+    }
+
+
     function searchUsers(){
         let email = document.getElementById("email").value;
         localStorage.setItem("searchEmail", email);
@@ -194,11 +203,11 @@ export default function PrimarySearchAppBar() {
         removeNotification()
     };
     const handleClick2 = (event) => {
-        setNoah(event.currentTarget);
+        setAnchorEl2(event.currentTarget);
     };
 
     const handleClose2 = () => {
-        setNoah(null);
+        setAnchorEl2(null);
     };
 
     function enterKeyPress(e) {
@@ -206,15 +215,6 @@ export default function PrimarySearchAppBar() {
             searchUsers();
         }
     }
-
-    // edge="end"
-    // aria-label="account of current user"
-    // aria-controls={menuId}
-    // aria-haspopup="true"
-    // color="inherit"
-    // onClick={handleClick2}
-
-
 
     return (
         <div className={classes.grow}>
@@ -263,18 +263,18 @@ export default function PrimarySearchAppBar() {
                             <Avatar className={classes.orange}>N</Avatar>
                         </IconButton>
 
-                        <StyledMenu2 id="customized-menu" anchorEl={noah} keepMounted open={Boolean(noah)} onClose={handleClose2}>
-                            <StyledMenuItem2>
-                                <ListItemIcon>
-                                    <ExitToAppIcon fontSize={"small"}/>
-                                </ListItemIcon>
-                                <ListItemText primary="Logout" />
-                            </StyledMenuItem2>
+                        <StyledMenu2 id="customized-menu" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
                             <StyledMenuItem2>
                                 <ListItemIcon>
                                     <PersonIcon fontSize={"small"}/>
                                 </ListItemIcon>
                                 <ListItemText primary="Profile" />
+                            </StyledMenuItem2>
+                            <StyledMenuItem2 onClick={redirectToLogin}>
+                                <ListItemIcon >
+                                    <ExitToAppIcon fontSize={"small"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Logout" />
                             </StyledMenuItem2>
                         </StyledMenu2>
                     </div>

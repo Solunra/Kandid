@@ -31,8 +31,6 @@ export default function Comments(props){
             .then(res => res.body.comments)
             .then(res => {
                 setComments(res);
-                console.log(comments);
-                console.log(props.PostId);
             })},[]);
     if(temp !== []){
         return(
