@@ -145,7 +145,7 @@ export default function PrimarySearchAppBar() {
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
     const [notification,setNotification]=React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
-
+    const [noah, setNoah] = React.useState(null);
 
 
     useEffect(()=>{
@@ -194,11 +194,11 @@ export default function PrimarySearchAppBar() {
         removeNotification()
     };
     const handleClick2 = (event) => {
-        setAnchorEl(event.currentTarget);
+        setNoah(event.currentTarget);
     };
 
     const handleClose2 = () => {
-        setAnchorEl(null);
+        setNoah(null);
     };
 
     function enterKeyPress(e) {
@@ -263,7 +263,7 @@ export default function PrimarySearchAppBar() {
                             <Avatar className={classes.orange}>N</Avatar>
                         </IconButton>
 
-                        <StyledMenu2 id="customized-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose2}>
+                        <StyledMenu2 id="customized-menu" anchorEl={noah} keepMounted open={Boolean(noah)} onClose={handleClose2}>
                             <StyledMenuItem2>
                                 <ListItemIcon>
                                     <ExitToAppIcon fontSize={"small"}/>
