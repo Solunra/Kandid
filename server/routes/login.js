@@ -1,19 +1,33 @@
 const express = require("express");
 const { User } = require('../database/schemas');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 
 
 module.exports = router;
 
 router.put("/", (req, res) => {
-    User.count({email:req.body.profile.email, password:req.body.profile.password}).exec((err, count) => {
-        if (count === 0) {
-            console.log("Incorrect user or password");
-            res.status(201).send("Incorrect user or password");
+
+    User.find({email:req.body.profile.email}).exec((err, user) => {
+        if(err){
+             res.status(203).send("Error");
+        }
+        else if (user.length === 0) {
+            res.status(201).send("Incorrect user");
         }
         else
         {
-            res.status(200).send("Successful login! redirect user");
+            bcrypt.compare(req.body.profile.password, user[0].password, function(err, result) {
+               if(err){
+                    res.status(203).send("Error");
+               }
+               else if(result){
+                 res.status(200).send("Successful login! redirect user");
+               }
+               else{
+                    res.status(202).send("Incorrect password");
+               }
+            });
         }
     });
 });
