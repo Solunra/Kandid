@@ -70,13 +70,13 @@ router.post("/", upload.array('image', 1), (req, res) => {
       }
       else {
     ////---- For Notifications
-          Follower.find({followee: req.body.UserID}).exec((err, followers) => {
+          Follower.find({followeeEmail: req.body.UserID}).exec((err, followers) => {
           if(err){
           }
           else{
               for(let i=0;i<followers.length;i++){
                   const notification = new notificationsModel;
-                  notification.Recipient_Email = followers[i].follower;
+                  notification.Recipient_Email = followers[i].followerEmail;
                   notification.Actor_Email = req.body.UserID;
                   notification.Message=req.body.UserID+" posted a picture.";
                   notification.Read_At = 1;

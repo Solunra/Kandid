@@ -191,9 +191,9 @@ function enterKeyPress(e) {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 2 new notifications" color="inherit" >
+                        <IconButton aria-label="show 2 new notifications" color="inherit" onClick={handleClick}>
                             <Badge badgeContent={numberOfNotifications} color="secondary">
-                                <NotificationsIcon onClick={handleClick}/>
+                                <NotificationsIcon />
                             </Badge>
                         </IconButton>
                         <StyledMenu
