@@ -11,11 +11,16 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from "@material-ui/core/Avatar";
 import { createBrowserHistory } from 'history';
-import request from "superagent";
+import request from "superagent"
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from "@material-ui/core/styles";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import {Redirect} from "react-router-dom";
 
 
 const history=createBrowserHistory();
@@ -78,11 +83,70 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const ITEM_HEIGHT = 48;
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        PaperProps={{
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                maxWidth: '50ch',
+            },
+        }}
+        {...props}
+    />
+));
+
+const StyledMenu2 = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem2 = withStyles((theme) => ({
+    root: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
+}))(MenuItem);
+
 export default function PrimarySearchAppBar() {
     const classes = useStyles();
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
     const [notification,setNotification]=React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl2, setAnchorEl2] = React.useState(null);
 
 
     useEffect(()=>{
@@ -108,7 +172,6 @@ export default function PrimarySearchAppBar() {
     }
 
     const menuId = 'primary-search-account-menu';
-
     const mobileMenuId = 'primary-search-account-menu-mobile';
 
     function redirectToWall(e){
@@ -116,15 +179,20 @@ export default function PrimarySearchAppBar() {
         history.push('/wall');
         window.location.reload(false);
     }
+
+    function redirectToLogin(){
+        history.replace("/login","/wall");
+        localStorage.setItem("email", "");
+        window.location.reload(false);
+    }
+
+
     function searchUsers(){
         let email = document.getElementById("email").value;
         localStorage.setItem("searchEmail", email);
         history.push('/users');
         window.location.reload(false);
     }
-
-    const ITEM_HEIGHT = 48;
-    const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -134,33 +202,20 @@ export default function PrimarySearchAppBar() {
         setAnchorEl(null);
         removeNotification()
     };
+    const handleClick2 = (event) => {
+        setAnchorEl2(event.currentTarget);
+    };
 
-    const StyledMenu = withStyles({
-        paper: {
-            border: '1px solid #d3d4d5',
-        },
-    })((props) => (
-        <Menu
-            elevation={10}
-            getContentAnchorEl={null}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-            }}
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'center',
-            }}
-            {...props}
-        />
-    ));
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+    };
 
-function enterKeyPress(e) {
-    if(e.keyCode == 13){
-        searchUsers();
-
+    function enterKeyPress(e) {
+        if(e.keyCode == 13){
+            searchUsers();
+        }
     }
-}
+
     return (
         <div className={classes.grow}>
             <AppBar position="static" color="white">
@@ -176,48 +231,26 @@ function enterKeyPress(e) {
                         Kandid
                     </Typography>
                     <div className={classes.search} onKeyDown={enterKeyPress}>
-                      <div className={classes.searchIcon}>
+                        <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
                         <InputBase id={"email"}
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-
+                                   placeholder="Search…"
+                                   classes={{
+                                       root: classes.inputRoot,
+                                       input: classes.inputInput,
+                                   }}
+                                   inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 2 new notifications" color="inherit" onClick={handleClick}>
+                        <IconButton color="inherit" onClick={handleClick}>
                             <Badge badgeContent={numberOfNotifications} color="secondary">
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <StyledMenu
-                            id="long-menu"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={open}
-                            onClose={handleClose}
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'center',
-                            }}
-
-                            PaperProps={{
-                                style: {
-                                    maxHeight: ITEM_HEIGHT * 4.5,
-                                    maxWidth: '50ch',
-                                },
-                            }}
-                        >
+                        <StyledMenu id="long-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose} >
                             {notification.map(option => {
                                 return(
                                     <MenuItem key={option} onClick={handleClose}>
@@ -226,15 +259,24 @@ function enterKeyPress(e) {
                                 )})}
                         </StyledMenu>
 
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            color="inherit"
-                        >
+                        <IconButton aria-controls="customized-menu" aria-haspopup="true" variant="contained" color="primary" onClick={handleClick2}>
                             <Avatar className={classes.orange}>N</Avatar>
                         </IconButton>
+
+                        <StyledMenu2 id="customized-menu" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
+                            <StyledMenuItem2>
+                                <ListItemIcon>
+                                    <PersonIcon fontSize={"small"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Profile" />
+                            </StyledMenuItem2>
+                            <StyledMenuItem2 onClick={redirectToLogin}>
+                                <ListItemIcon >
+                                    <ExitToAppIcon fontSize={"small"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Logout" />
+                            </StyledMenuItem2>
+                        </StyledMenu2>
                     </div>
 
                     <div className={classes.sectionMobile}>
