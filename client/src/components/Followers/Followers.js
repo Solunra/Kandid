@@ -6,6 +6,10 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from '@material-ui/core/IconButton';
 import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import request from "superagent";
+import PersonIcon from "@material-ui/icons/Person";
+import { createBrowserHistory } from 'history';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+const history=createBrowserHistory();
 
 const useStyles =makeStyles(theme=>({
     root:{
@@ -39,6 +43,14 @@ export default function Followers(){
             .then(data => {
                 setUsers(data);
     })},[]);
+
+    function redirectToProfile(profileEmail){
+        history.replace('/wall/Profile',"/users");
+        console.log(profileEmail+"test");
+        localStorage.setItem("profileEmail", profileEmail);
+        //window.location.reload(false);
+    }
+
     function Follow(followee,e){
         e.preventDefault();
         console.log(`${user} is Following ${followee}`);
@@ -70,6 +82,7 @@ export default function Followers(){
                             <PersonAddOutlinedIcon className={classes.title}/>
                         </IconButton>
                     }
+
                 />
             </GridListTile>
         ))}

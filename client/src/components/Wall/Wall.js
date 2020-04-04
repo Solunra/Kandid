@@ -9,6 +9,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 
 export default class Wall extends Component{
     constructor(props) {
+        //localStorage.setItem("profileEmail","");
         super(props);
         this.handlePost=this.handlePost.bind(this);
         this.state = {
