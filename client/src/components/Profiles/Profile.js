@@ -1,7 +1,6 @@
 import NavBar from "../Wall/NavBar";
 import Post from "../Wall/Post";
-import React, {useEffect} from "react";
-import request from "superagent";
+import React from "react";
 
 export default function Profile() {
     return (
