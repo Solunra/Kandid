@@ -31,7 +31,6 @@ export default class Likes extends React.Component {
     if(!this.state.updated) {
       request.post("http://localhost:8000/api/likes/update")
       .send({
-        email: this.state.userEmail,
         PostID:this.props.PostID,
         likes: this.state.likes+1
       })
@@ -49,7 +48,6 @@ export default class Likes extends React.Component {
     } else {
       request.post("http://localhost:8000/api/likes/update")
       .send({
-        email: this.state.userEmail,
         PostID:this.props.PostID,
         likes: this.state.likes-1
       })
