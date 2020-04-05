@@ -21,7 +21,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from "@material-ui/core/styles";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import {Redirect} from "react-router-dom";
+
 
 
 const history=createBrowserHistory();
@@ -148,9 +148,12 @@ export default function PrimarySearchAppBar() {
     const [notification,setNotification]=React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorEl2, setAnchorEl2] = React.useState(null);
+    const [avatar, setAvatar] = React.useState(null);
 
 
     useEffect(()=>{
+        setAvatar(localStorage.getItem("email").charAt(0).toUpperCase());
+
         request.put("http://localhost:8000/api/notification")
             .query({email: localStorage.getItem("email")})
             .then(res => res.body.notifications)
@@ -268,7 +271,7 @@ export default function PrimarySearchAppBar() {
                         </StyledMenu>
 
                         <IconButton aria-controls="customized-menu" aria-haspopup="true" variant="contained" color="primary" onClick={handleClick2}>
-                            <Avatar className={classes.orange}>N</Avatar>
+                            <Avatar className={classes.orange}>{avatar}</Avatar>
                         </IconButton>
 
                         <StyledMenu2 id="customized-menu" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
