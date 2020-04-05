@@ -41,7 +41,6 @@
   * Tigran Karapetyan (Tigrankar)
   * Ashwin Philip (Ashphil30)
   * Noah Freger (noahfreger)
- 
  #### JSHint with Markdown Reporter
    The following reporter was used: https://github.com/justinchmura/jshint-md-reporter <br/>
    Use the following command to run the md report for the backend <br/>

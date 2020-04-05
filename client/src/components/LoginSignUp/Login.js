@@ -25,6 +25,7 @@ export default class Login extends Component {
     const { email, password, rememberMe } = this.state;
     localStorage.setItem("rememberMe", rememberMe);
     localStorage.setItem("email",email);
+    localStorage.setItem("profileEmail","");
 
     event.preventDefault();
     let json = JSON.stringify(this.state);

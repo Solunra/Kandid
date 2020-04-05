@@ -7,7 +7,7 @@ export default function Profile() {
         <React.Fragment>
             <NavBar/>
             <div className="container">
-                <Post />
+                <Post/>
             </div>
         </React.Fragment>
     )
