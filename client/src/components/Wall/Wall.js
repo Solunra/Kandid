@@ -6,9 +6,14 @@ import IconButton from "@material-ui/core/IconButton";
 import request from 'superagent';
 import Post from './Post';
 import Backdrop from "@material-ui/core/Backdrop";
+import { createBrowserHistory } from 'history';
+const history=createBrowserHistory();
 
 export default class Wall extends Component{
     constructor(props) {
+        if(history.location.pathname === "/wall"){
+            localStorage.setItem("profileEmail","");
+        }
         super(props);
         this.handlePost=this.handlePost.bind(this);
         this.state = {
