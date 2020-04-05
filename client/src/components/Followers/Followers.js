@@ -9,6 +9,7 @@ import request from "superagent";
 import PersonIcon from "@material-ui/icons/Person";
 import { createBrowserHistory } from 'history';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Avatar from "@material-ui/core/Avatar";
 const history=createBrowserHistory();
 
 const useStyles =makeStyles(theme=>({
@@ -44,11 +45,12 @@ export default function Followers(){
                 setUsers(data);
     })},[]);
 
-    function redirectToProfile(profileEmail){
+    function redirectToProfile(profileEmail,e){
+        e.preventDefault();
         history.replace('/wall/Profile',"/users");
         console.log(profileEmail+"test");
         localStorage.setItem("profileEmail", profileEmail);
-        //window.location.reload(false);
+        window.location.reload(false);
     }
 
     function Follow(followee,e){
@@ -69,14 +71,15 @@ export default function Followers(){
           <GridList className={classes.gridList} cellHeight={200} spacing={1} cols={1}>
     {users.map(user =>(
             <GridListTile key={images}>
-                <img src={images} alt="image not shown"/>
+                <IconButton onClick={e=>redirectToProfile(user.email,e)}>
+                    <Avatar>{user.email.charAt(0).toUpperCase()}</Avatar>
+                </IconButton>
                 <GridListTileBar
                     title={user.email}
                     classes={{
                         root:classes.titleBar,
                         title:classes.title,
                     }}
-
                     actionIcon={
                         <IconButton aria-label={`star ${user.email}`} onClick={e=>Follow(user.email,e)}>
                             <PersonAddOutlinedIcon className={classes.title}/>
