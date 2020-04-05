@@ -188,6 +188,7 @@ export default function PrimarySearchAppBar() {
     function redirectToLogin(){
         history.replace("/login","/wall");
         localStorage.setItem("email", "");
+        localStorage.setItem("profileEmail", "");
         window.location.reload(false);
     }
 
