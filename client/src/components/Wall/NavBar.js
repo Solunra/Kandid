@@ -14,13 +14,14 @@ import { createBrowserHistory } from 'history';
 import request from "superagent"
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from "@material-ui/core/styles";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import {Redirect} from "react-router-dom";
+
 
 
 const history=createBrowserHistory();
@@ -147,9 +148,12 @@ export default function PrimarySearchAppBar() {
     const [notification,setNotification]=React.useState([]);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorEl2, setAnchorEl2] = React.useState(null);
+    const [avatar, setAvatar] = React.useState(null);
 
 
     useEffect(()=>{
+        setAvatar(localStorage.getItem("email").charAt(0).toUpperCase());
+
         request.put("http://localhost:8000/api/notification")
             .query({email: localStorage.getItem("email")})
             .then(res => res.body.notifications)
@@ -176,6 +180,7 @@ export default function PrimarySearchAppBar() {
 
     function redirectToWall(e){
         console.log("Redirecting");
+        localStorage.setItem("profileEmail", "");
         history.push('/wall');
         window.location.reload(false);
     }
@@ -186,10 +191,16 @@ export default function PrimarySearchAppBar() {
         window.location.reload(false);
     }
 
+    function redirectToProfile(){
+        history.push('/wall/Profile');
+        localStorage.setItem("profileEmail", localStorage.getItem("email"));
+        window.location.reload(false);
+    }
 
     function searchUsers(){
         let email = document.getElementById("email").value;
         localStorage.setItem("searchEmail", email);
+        localStorage.setItem("profileEmail", "");
         history.push('/users');
         window.location.reload(false);
     }
@@ -260,11 +271,17 @@ export default function PrimarySearchAppBar() {
                         </StyledMenu>
 
                         <IconButton aria-controls="customized-menu" aria-haspopup="true" variant="contained" color="primary" onClick={handleClick2}>
-                            <Avatar className={classes.orange}>N</Avatar>
+                            <Avatar className={classes.orange}>{avatar}</Avatar>
                         </IconButton>
 
                         <StyledMenu2 id="customized-menu" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
-                            <StyledMenuItem2>
+                            <StyledMenuItem2 onClick={redirectToWall}>
+                                <ListItemIcon>
+                                    <HomeIcon fontSize={"small"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Home" />
+                            </StyledMenuItem2>
+                            <StyledMenuItem2 onClick={redirectToProfile}>
                                 <ListItemIcon>
                                     <PersonIcon fontSize={"small"}/>
                                 </ListItemIcon>

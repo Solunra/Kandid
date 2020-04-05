@@ -43,7 +43,7 @@ export default function Comments(props){
                     {comments.map(comments=>(
                         <ListItem alignItems={"flex-start"}>
                             <ListItemAvatar>
-                                <Avatar alt={comments.UserID}>R</Avatar>
+                                <Avatar alt={comments.UserID}>{comments.UserID.charAt(0).toUpperCase()}</Avatar>
                             </ListItemAvatar>
                             <ListItemText
                                 secondary={

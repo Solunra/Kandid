@@ -30,9 +30,6 @@ router.get("/", (req, res) => {
         }
         else {
             Follower.find({follower: userRes[0].UserID}).exec((err, followed) => {
-                if (err || followed.length === 0) {
-                    getAll(req, res);
-                } else {
                     const followID = followed.map(follower => {
                             return follower.followee;
                         }
@@ -44,13 +41,32 @@ router.get("/", (req, res) => {
                             res.status(200).send({posts: post});
                         }
                     });
-                }
+
             });
         }
     });
 });
 
 router.get("/all", (req, res) => getAll(req, res));
+
+router.get("/profile", (req, res) =>{
+    User.find({email: req.query.email}).exec((err, userRes) => {
+        if (err || userRes.length === 0) {
+            res.status(400).send({message: "No user found"});
+        }
+        else {
+            Post.find({UserID: {$in: userRes[0].UserID}}).sort('-PostDate').exec((err, post) => {
+                if (err) {
+                    res.status(200).send({message: "There are no posts"});
+                } else {
+                    res.status(200).send({posts: post});
+                }
+            });
+        }
+    });
+
+
+});
 
 router.get("/test", (req, res) => {
     const post0 = new postModel;
