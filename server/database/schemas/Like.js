@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const likeSchema = new Schema({
     PostID: { type: String },
     UserID: { type: String },
-    likes: { type: Number }
+    likes: { type: String }
 });
 
 likeSchema.methods.hide = function() {

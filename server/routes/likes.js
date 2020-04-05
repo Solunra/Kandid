@@ -9,9 +9,9 @@ const LikeModel = mongoose.model("Like");
 module.exports = router;
 
 router.post("/update", (req, res) => {
-    Post.updateOne({'PostID': req.query.PostID}, {Like: req.query.likes}).exec((err, res) => {
+    Post.updateOne({'PostID': req.query.PostID}, {Like: req.query.likes}).exec((err, result) => {
         if (err){
-            res.status(200).send({message: "Post not found"})
+            res.status(400).send({message: "Post not found"})
         }
         else{
             res.status(200)
@@ -20,12 +20,12 @@ router.post("/update", (req, res) => {
 })
 
 router.get("/", (req, res) => {
-    Post.find({'PostID': req.query.PostID}).exec((err, res) => {
+    Post.find({'PostID': req.query.PostID}).exec((err, result) => {
         if (err){
             res.status(200).send({message: "error finding post"})
         }
         else{
-            res.status(200).send(Post)
+            res.status(200)
         }
     })
 })
