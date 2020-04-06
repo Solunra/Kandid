@@ -48,4 +48,3 @@
         jshint --reporter node_modules/jshint-md-reporter/lib/reporter.js server/ > report.md
      ``<br/>
    It will generate a report in markdown style as a file on the root directory as report.md
-
