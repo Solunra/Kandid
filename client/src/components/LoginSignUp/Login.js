@@ -2,9 +2,23 @@ import React, { Component } from "react";
 import { Link, Route, Switch, Redirect } from "react-router-dom";
 import "./index.css";
 import request from "superagent";
+import { createBrowserHistory } from 'history';
+const history=createBrowserHistory();
 
 export default class Login extends Component {
   constructor(props) {
+    if((history.location.pathname === "/login" || history.location.pathname === "/") && localStorage.getItem("email") !== ""){
+
+      if(history.location.pathname === "/login"){
+        history.replace("/wall","/login");
+        window.location.reload(false);
+      }
+      else{
+        history.push('/wall');
+        window.location.reload(false);
+      }
+
+    }
     super(props);
     this.state = {
       email: "",
