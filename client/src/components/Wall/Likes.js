@@ -18,7 +18,7 @@ export default class Likes extends React.Component {
       .query({PostID: this.props.PostID})
       .then(res => res.body)
       .then(res => {
-          this.setState({likes: res.Like})
+          this.setState({likes: res[0].Like})
       })
   };
 
@@ -56,7 +56,7 @@ export default class Likes extends React.Component {
           this.setState((prevState, props) => {
             return {
               likes: prevState.likes - 1,
-              updated: true
+              updated: false
             };
           });
         }

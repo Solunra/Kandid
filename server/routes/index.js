@@ -13,7 +13,7 @@ const likes =require('./likes');
 
 const router = express.Router();
 
-router.use('/api/likes', likes);
+
 router.use('/api/post', post);
 router.use('/api/comment', comment);
 router.use('/api/login', login);
@@ -21,6 +21,7 @@ router.use('/api/register', register);
 router.use('/api/user', user);
 router.use('/api/follow', follow);
 router.use('/api/notification', notification);
+router.use('/api/likes', likes);
 router.use(cors());
 
 module.exports = router;
