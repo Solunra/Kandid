@@ -3,6 +3,7 @@ import request from "superagent";
 import CommentBox from "./CommentBox";
 import Reply from "./Reply";
 
+
 export default class Comment extends React.Component{
     state = {
         comments: []
@@ -25,6 +26,7 @@ export default class Comment extends React.Component{
         if (this.state.comments !== []) {
             return (
                 <div>
+                    
                     <CommentBox comments = {this.state.comments}/>
                     <Reply PostID = {this.props.PostID}/>
                 </div>
@@ -33,6 +35,7 @@ export default class Comment extends React.Component{
         else {
             return (
                 <div>
+                    
                     <Reply PostID = {this.props.PostID} />
                 </div>
             )
