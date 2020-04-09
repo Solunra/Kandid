@@ -1,7 +1,6 @@
 const express = require("express");
-const { Comment } = require('../database/schemas');
+const { Comment, User } = require('../database/schemas');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 
 const router = express.Router();
 
@@ -29,11 +28,20 @@ router.get("/test", (req, res) => {
     res.send("[Database has received a comment]");
 });
 
-router.put("/", (req, res) => {
+router.post("/", (req, res) => {
     var comment = new commentModel;
-    comment.UserID = " ";
-    comment.PostID = req.query.PostID;
-    comment.Comment = req.query.Comment;
-    comment.save();
-    res.status(200).send("Comment successfully posted");
+    User.find({email: req.body.email}).exec((err, result) => {
+        if(err) {
+            res.status(400).send({message: "Invalid User"})
+        }
+        else {
+            comment.UserID = ((result.length !== 0) ? (result[0].firstname + " " + result[0].lastname) : ("Unknown User"));
+            comment.PostID = req.body.PostID;
+            comment.Comment = req.body.Comment;
+            comment.save().then(
+                res.status(200).send("Comment successfully posted")
+        );
+        }
+    });
+
 });

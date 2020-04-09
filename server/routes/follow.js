@@ -1,13 +1,8 @@
-const { Follower } = require("../database/schemas");
+const { Follower, User } = require("../database/schemas");
 const express = require("express");
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-
 const router = express.Router();
 
-router.use(bodyParser.urlencoded({ extended: false }));
-// parse application/json
-router.use(bodyParser.json());
 
 
 module.exports = router;
@@ -16,39 +11,45 @@ const followModel = mongoose.model("Follower");
 
 router.put("/", (req, res) => {
   var follow=new followModel;
-  follow.followee=req.query.followee;
-  follow.follower=req.query.follower;
-  follow.notificationFlag=0;
-  console.log(follow);
-  follow.save(function(err) {
-    if (err) {
-      return res.status(404).json({
-        success: false,
-        status: 404,
-        data: {},
-        message: "There was an error trying to follow the user."
+
+  User.find({email: req.query.followee}).exec((err, result) => {
+    if(err || result === undefined ) {
+      res.status(400).send({message: "Error: No user found"});
+    }
+    else {
+      follow.followee = result[0].UserID;
+      follow.followeeEmail = result[0].email;
+      User.find({email: req.query.follower}).exec((err, result2) => {
+        if (err || result2 === undefined) {
+          res.status(400).send({message: "Error: No user found"});
+        }
+        else {
+          follow.follower = result2[0].UserID;
+          follow.followerEmail = result2[0].email;
+          follow.save(function(err) {
+            if (err) {
+              res.status(400).send({success: false, data: {}, message: "There was an error trying to follow the user."});
+            }
+            else {
+              res.status(200).send({success: true, data: follow, message: "Successfully followed user"});
+            }
+          });
+        }
       });
     }
-    return res.status(200).json({
-      success: true,
-      status: 200,
-      data: follow,
-      message: "Successfully followed user"
-    });
   });
 });
 router.get("/test", (req, res) => {
   const follow0 = new followModel;
   follow0.follower = "testFollower";
   follow0.followee = "testFollowee";
-  follow0.notificationFlag=0;
   follow0.save();
   res.send("[Follow has been saved to the Database]");
 });
 router.get("/unfollow", (req, res) => {
   let follower = req.body.follower;
   let followee = req.body.followee;
-
+  //TODO: update this when unfollow option has been added onto the front end
   Follower.remove({ follower: follower, followee: followee }, (err, result) => {
     if (err) {
       return res.status(404).json({

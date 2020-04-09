@@ -2,6 +2,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
 const port = process.env.port || 8000;
+const bodyParser = require('body-parser');
 
 require('./database');
 app.use(function(req, res, next) {
@@ -12,8 +13,8 @@ app.use(function(req, res, next) {
 });
 const routes = require('./routes/index');
 
-// TODO remove this once the front end has been implemented
-app.get('/', (req, res) => res.send("Web Page Test"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // This allows all routes to be processed
 app.use('/', routes);

@@ -5,7 +5,8 @@ const { Schema } = mongoose;
 const followSchema = new Schema({
     followee: { type: String },
     follower: { type: String },
-    notificationFlag: { type: Number },
+    followeeEmail: { type: String },
+    followerEmail: { type: String },
 });
 
 followSchema.methods.hide = function() {

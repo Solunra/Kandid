@@ -1,3 +1,3 @@
-import Followers from "./mainPageFollowers.component";
+import Followers from "./MainPageFollowers";
 
 export {Followers};

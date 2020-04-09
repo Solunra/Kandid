@@ -6,14 +6,23 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Avatar from "@material-ui/core/Avatar";
 import { createBrowserHistory } from 'history';
-import request from "superagent";
+import request from "superagent"
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import {withStyles} from "@material-ui/core/styles";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+
+
 
 const history=createBrowserHistory();
 const useStyles = makeStyles(theme => ({
@@ -75,99 +84,150 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const ITEM_HEIGHT = 48;
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        PaperProps={{
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                maxWidth: '50ch',
+            },
+        }}
+        {...props}
+    />
+));
+
+const StyledMenu2 = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props) => (
+    <Menu
+        elevation={0}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem2 = withStyles((theme) => ({
+    root: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
+}))(MenuItem);
+
 export default function PrimarySearchAppBar() {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [numberOfNotifications,setNumberOfNotifications]=React.useState(0);
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const [notification,setNotification]=React.useState([]);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl2, setAnchorEl2] = React.useState(null);
+    const [avatar, setAvatar] = React.useState(null);
 
 
     useEffect(()=>{
+        setAvatar(localStorage.getItem("email").charAt(0).toUpperCase());
+
         request.put("http://localhost:8000/api/notification")
             .query({email: localStorage.getItem("email")})
-            .end((err,res) =>{
-                if(res.status==222){
-                    console.log("notification set");
-                   setNumberOfNotifications(1);
-                }
+            .then(res => res.body.notifications)
+            .then(data => {
+                setNotification(data);
+                setNumberOfNotifications(data.length);
             });
     },[]);
 
     function removeNotification(e){
-        e.preventDefault();
         setNumberOfNotifications(0);
         request.put("http://localhost:8000/api/notification/remove")
             .query({email: localStorage.getItem("email")})
             .end((err,res) => {
-                if (res.status == 224) {
+                if (res.status == 200) {
                     console.log("removed notification");
                 }
             });
         window.location.reload(false);
     }
 
-
-    const handleProfileMenuOpen = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuClose = () => {
-        setMobileMoreAnchorEl(null);
-    };
-
-
-    const handleMobileMenuOpen = event => {
-        setMobileMoreAnchorEl(event.currentTarget);
-    };
-
     const menuId = 'primary-search-account-menu';
-
     const mobileMenuId = 'primary-search-account-menu-mobile';
-    // const renderMobileMenu = (
-    //     <Menu
-    //         anchorEl={mobileMoreAnchorEl}
-    //         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-    //         id={mobileMenuId}
-    //         keepMounted
-    //         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-    //         open={isMobileMenuOpen}
-    //         onClose={handleMobileMenuClose}
-    //     >
-    //         <MenuItem>
-    //             <IconButton aria-label="show 2 new notifications" color="inherit" onClick={console.log("PP")}>
-    //                 {/*TODO:Use the real number of notification*/}
-    //                 <Badge badgeContent={numberOfNotifications} color="secondary">
-    //                     <NotificationsIcon />
-    //                 </Badge>
-    //             </IconButton>
-    //             <p>Notifications</p>
-    //         </MenuItem>
-    //         <MenuItem onClick={handleProfileMenuOpen}>
-    //             <IconButton
-    //                 aria-label="account of current user"
-    //                 aria-controls="primary-search-account-menu"
-    //                 aria-haspopup="true"
-    //                 color="inherit"
-    //             >
-    //                 {/*TODO: Use Picture for avatar */}
-    //                 <Avatar className={classes.orange}>N</Avatar>
-    //             </IconButton>
-    //             <p>Profile</p>
-    //         </MenuItem>
-    //     </Menu>
-    // );
 
-    function RedirectToWall(e){
+    function redirectToWall(e){
         console.log("Redirecting");
+        localStorage.setItem("profileEmail", "");
         history.push('/wall');
         window.location.reload(false);
     }
+
+    function redirectToLogin(){
+        history.replace("/login","/wall");
+        localStorage.setItem("email", "");
+        localStorage.setItem("profileEmail", "");
+        window.location.reload(false);
+    }
+
+    function redirectToProfile(){
+        history.push('/wall/Profile');
+        localStorage.setItem("profileEmail", localStorage.getItem("email"));
+        window.location.reload(false);
+    }
+
     function searchUsers(){
+        let email = document.getElementById("email").value;
+        localStorage.setItem("searchEmail", email);
+        localStorage.setItem("profileEmail", "");
         history.push('/users');
         window.location.reload(false);
     }
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        removeNotification()
+    };
+    const handleClick2 = (event) => {
+        setAnchorEl2(event.currentTarget);
+    };
+
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+    };
+
+    function enterKeyPress(e) {
+        if(e.keyCode == 13){
+            searchUsers();
+        }
+    }
+
     return (
         <div className={classes.grow}>
             <AppBar position="static" color="white">
@@ -179,48 +239,69 @@ export default function PrimarySearchAppBar() {
                         aria-label="open drawer"
                     >
                     </IconButton>
-                    <Typography className={classes.title} variant="h4" noWrap onClick={RedirectToWall}>
+                    <Typography className={classes.title} variant="h4" noWrap onClick={redirectToWall}>
                         Kandid
                     </Typography>
-                    <div className={classes.search}>
+                    <div className={classes.search} onKeyDown={enterKeyPress}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput,
-                            }}
-                            inputProps={{ 'aria-label': 'search' }}
-                            onClick={searchUsers}
+                        <InputBase id={"email"}
+                                   placeholder="Search…"
+                                   classes={{
+                                       root: classes.inputRoot,
+                                       input: classes.inputInput,
+                                   }}
+                                   inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        {/*TODO:Use the real number of notification*/}
-                        <IconButton aria-label="show 2 new notifications" color="inherit" >
-                            <Badge badgeContent={numberOfNotifications} color="secondary" n>
-                                <NotificationsIcon onClick={removeNotification}/>
+                        <IconButton color="inherit" onClick={handleClick}>
+                            <Badge badgeContent={numberOfNotifications} color="secondary">
+                                <NotificationsIcon />
                             </Badge>
                         </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <Avatar className={classes.orange}>N</Avatar>
+                        <StyledMenu id="long-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose} >
+                            {notification.map(option => {
+                                return(
+                                    <MenuItem key={option} onClick={handleClose}>
+                                        {option.Message}
+                                    </MenuItem>
+                                )})}
+                        </StyledMenu>
+
+                        <IconButton aria-controls="customized-menu" aria-haspopup="true" variant="contained" color="primary" onClick={handleClick2}>
+                            <Avatar className={classes.orange}>{avatar}</Avatar>
                         </IconButton>
+
+                        <StyledMenu2 id="customized-menu" anchorEl={anchorEl2} keepMounted open={Boolean(anchorEl2)} onClose={handleClose2}>
+                            <StyledMenuItem2 onClick={redirectToWall}>
+                                <ListItemIcon>
+                                    <HomeIcon fontSize={"small"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Home" />
+                            </StyledMenuItem2>
+                            <StyledMenuItem2 onClick={redirectToProfile}>
+                                <ListItemIcon>
+                                    <PersonIcon fontSize={"small"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Profile" />
+                            </StyledMenuItem2>
+                            <StyledMenuItem2 onClick={redirectToLogin}>
+                                <ListItemIcon >
+                                    <ExitToAppIcon fontSize={"small"}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Logout" />
+                            </StyledMenuItem2>
+                        </StyledMenu2>
                     </div>
+
                     <div className={classes.sectionMobile}>
                         <IconButton
                             aria-label="show more"
                             aria-controls={mobileMenuId}
                             aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
                             color="inherit"
                         >
                             <MoreIcon />
@@ -228,7 +309,6 @@ export default function PrimarySearchAppBar() {
                     </div>
                 </Toolbar>
             </AppBar>
-            {/*{renderMobileMenu}*/}
         </div>
     );
 }
